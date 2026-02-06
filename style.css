@@ -326,7 +326,7 @@ footer {
    ========================================================================== */
 
 .iframe-view {
-    position: fixed;
+     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -337,17 +337,30 @@ footer {
     z-index: 1000;
     display: flex;
     flex-direction: column;
+
+    /* --- 状态1：完全隐藏 (默认状态) --- */
     opacity: 0;
     visibility: hidden;
+    pointer-events: none; /* <--- 关键修复：让透明层无法被点击，事件穿透到底层 */
     transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s;
+    
+    /* 为多个属性添加平滑过渡 */
+    transition: opacity 0.4s ease,
+                transform 0.4s ease,
+                visibility 0s 0.4s, /* visibility 延迟到动画结束后再变为 hidden */
+                pointer-events 0s 0.4s; /* pointer-events 也延迟，确保在动画完成前不响应事件 */
 }
 
 .iframe-view.active {
+      /* --- 状态2：完全显示 --- */
     opacity: 1;
     visibility: visible;
+    pointer-events: auto; /* <--- 恢复事件接收 */
     transform: translateY(0);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+
+    /* 显示时，过渡立即生效，无延迟 */
+    transition: opacity 0.4s ease,
+                transform 0.4s ease;
 }
 
 /* Iframe 控制栏 */
