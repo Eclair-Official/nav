@@ -8,7 +8,7 @@ window.siteConfig = {
     // --- 基本信息 ---
     title: 'Eclair的导航',
     subtitle: 'Stay Hungry, Stay Foolish.',
-    githubRepoUrl: 'https://github.com/YOUR_USERNAME/YOUR_REPO',
+    githubRepoUrl: 'https://github.com/Eclair-Official',
     // --- 新增：Footer 配置 ---
     footer: {
         // 自定义你的版权信息
