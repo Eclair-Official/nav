@@ -4,38 +4,48 @@
 window.siteConfig = {
     title: "我的导航",
     subtitle: "Stay Hungry, Stay Foolish.",
+    // 新增：GitHub 仓库链接配置
+    githubRepoUrl: "https://github.com/YOUR_USERNAME/YOUR_REPO",
 
-    // --- 主题与颜色配置 (可完全自定义) ---
+    // --- 主题与颜色配置 (完全可自定义) ---
     themes: {
         // 深色主题
         dark: {
             name: "深夜模式",
-            // --- 核心颜色 ---
-            cardBg: "rgba(30, 30, 40, 0.7)", // 毛玻璃卡片背景
-            textPrimary: "#E0E0E0", // 主要文字颜色 (标题等)
-            textSecondary: "#B0BEC5", // 次要文字颜色 (描述等)
-            primary: "#BB86FC", // 主色调 (图标、按钮高亮)
-            secondary: "#03DAC6", // 次要色调 (分类标题)
-            border: "rgba(255, 255, 255, 0.1)", // 边框颜色
-            shadow: "rgba(0, 0, 0, 0.3)", // 阴影颜色
+            isLight: false, // 新增：主题类型标识
+            cardBg: "rgba(30, 30, 40, 0.7)",
+            textPrimary: "#E0E0E0",
+            textSecondary: "#B0BEC5",
+            titleColor: "#ffffff", // 新增：标题颜色
+            subtitleColor: "#f0f0f0", // 新增：副标题颜色
+            primary: "#BB86FC",
+            secondary: "#03DAC6",
+            border: "rgba(255, 255, 255, 0.1)",
+            shadow: "rgba(0, 0, 0, 0.3)",
         },
         // 浅色主题
         light: {
             name: "白天模式",
+            isLight: true, // 新增：主题类型标识
             cardBg: "rgba(255, 255, 255, 0.8)",
             textPrimary: "#1C1E21",
             textSecondary: "#606770",
+            titleColor: "#1C1E21", // 新增：标题颜色
+            subtitleColor: "#606770", // 新增：副标题颜色
             primary: "#6750A4",
             secondary: "#018786",
             border: "rgba(0, 0, 0, 0.1)",
             shadow: "rgba(0, 0, 0, 0.1)",
         },
-        // 你甚至可以创建一个全新的主题，例如赛博朋克风
+        // 赛博朋克风
         cyberpunk: {
             name: "赛博朋克",
+            isLight: false, // 新增：主题类型标识
             cardBg: "rgba(10, 25, 47, 0.8)",
             textPrimary: "#00FFF0",
             textSecondary: "#FF10F0",
+            titleColor: "#00FFF0", // 新增：标题颜色
+            subtitleColor: "#FFD700", // 新增：副标题颜色
             primary: "#FFD700",
             secondary: "#00FFFF",
             border: "rgba(255, 0, 255, 0.3)",
@@ -43,13 +53,15 @@ window.siteConfig = {
         }
     },
 
-    // --- 背景配置 (依然可以自定义) ---
+    // --- 背景配置 (优化和增强) ---
     background: {
         defaultType: "gradient", // 'gradient' 或 'unsplash'
+        // 新增：一个通用的默认渐变，用于无特定主题渐变时的保底
+        defaultGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
         gradients: {
             dark: "linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)",
             light: "linear-gradient(to top, #ffecd2 0%, #fcb69f 100%)",
-            cyberpunk: "linear-gradient(to right, #0f0c29, #302b63, #24243e)" // 为你的新主题定义背景
+            cyberpunk: "linear-gradient(to right, #0f0c29, #302b63, #24243e)"
         },
         unsplash: {
             collectionId: "a8qPq9h1P_M",

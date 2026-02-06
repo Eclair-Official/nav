@@ -1,7 +1,8 @@
 /* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
 
 /* --- 动态主题变量将由 JS 注入到 :root --- */
-/* 例如 :root { --card-bg: rgba(...); } */
+/* 例如 :root { --card-bg: rgba(...); --title-color: #ffffff; } */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -55,7 +56,8 @@ footer {
     gap: 0.5rem;
 }
 
-.icon-button {
+.icon-button,
+#github-link { /* 将 GitHub 链接样式与按钮统一 */
     border-radius: 50%;
     width: 44px;
     height: 44px;
@@ -70,9 +72,11 @@ footer {
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
+    text-decoration: none; /* 去除链接下划线 */
 }
 
-.icon-button:hover {
+.icon-button:hover,
+#github-link:hover {
     transform: scale(1.1);
     background-color: rgba(255, 255, 255, 0.15);
 }
@@ -107,25 +111,130 @@ footer {
 
 /* --- 标题与小组件 --- */
 #site-title, #site-subtitle {
-    color: #ffffff; /* 标题和副标题保持高对比度 */
+    /* 优化：使用变量替代硬编码颜色 */
+    color: var(--title-color);
     text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
 }
-#site-subtitle { color: #f0f0f0; }
-.widget {
+
+#site-subtitle { 
+    color: var(--subtitle-color); 
+}
+
+/* .widget {
+    
     margin-top: 1rem;
     font-size: 1.1rem;
     font-family: 'Courier New', Courier, monospace;
-    color: #ffffff;
+    color: var(--title-color); 
     padding: 5px 15px;
     border-radius: 20px;
     display: inline-block;
-    /* 应用毛玻璃效果 */
+  
     background-color: var(--card-bg);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
 }
+ */
+/* ========================================================================== */
+/* ==              方案一：极简数字风 (默认应用此方案)                   == */
+/* ========================================================================== */
+#clock-widget {
+      margin-top: 1.5rem;
+    font-family: 'Orbitron', sans-serif; 
+    color: var(--primary);
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px var(--primary); 
+}
 
+.clock-time {
+    font-size: 2.5rem;
+    font-weight: 700;  
+    line-height: 1;
+}
+
+.clock-date-info {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.clock-date, .clock-weekday {
+    font-weight: 400;
+}
+
+/* ========================================================================== */
+/* ==              方案二：经典仪表盘风 (如需使用，请注释掉上面的方案)      == */
+/* ========================================================================== */
+
+/* #clock-widget {
+    margin-top: 1.5rem;
+    font-family: 'Rajdhani', sans-serif; 
+    color: var(--text-primary); 
+    padding: 10px 20px; 
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+
+    background-color: var(--card-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    text-shadow: 0 0 5px currentColor; 
+}
+
+.clock-time {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.clock-date-info {
+    display: flex;
+    flex-direction: column; 
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.clock-date, .clock-weekday {
+    line-height: 1.2;
+} */
+
+
+/* ========================================================================== */
+/* ==                           其他样式保持不变                           == */
+/* ========================================================================== */
+
+/* --- 响应式设计 --- (请确保在文件末尾)
+@media (max-width: 768px) {
+    #site-title { font-size: 2rem; }
+    .controls { top: 1rem; right: 1rem; }
+    .icon-button, #github-link { width: 38px; height: 38px; }
+    .nav-cards { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    
+    /* 为方案一添加响应式 */
+    .clock-time { font-size: 2rem; }
+    .clock-date-info { font-size: 0.9rem; }
+
+    /* 为方案二添加响应式 (如果使用) */
+    /*
+    #clock-widget { 
+        flex-direction: column; 
+        gap: 5px;
+        padding: 8px 15px;
+    }
+    .clock-time { font-size: 1.8rem; }
+    .clock-date-info { 
+        flex-direction: row; 
+        font-size: 0.8rem; 
+        gap: 10px;
+    }
+    */
+}
 /* --- 主体内容 --- */
 main#content {
     max-width: 1200px;
@@ -211,15 +320,18 @@ main#content {
     padding: 3rem 1rem;
 }
 
-/* --- 工具类 --- */
-.hidden {
-    display: none !important;
-}
 
 /* --- 响应式设计 --- */
 @media (max-width: 768px) {
     #site-title { font-size: 2rem; }
     .controls { top: 1rem; right: 1rem; }
-    .icon-button { width: 38px; height: 38px; }
+    .icon-button, #github-link { width: 38px; height: 38px; }
     .nav-cards { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
 }
+
+/* --- 删除的 .hidden 类 --- */
+/*
+.hidden {
+    display: none !important;
+}
+*/

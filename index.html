@@ -11,25 +11,32 @@
 
     <header>
         <div class="controls">
+            <div id="clock-widget" class="widget">
+                <div class="clock-time">00:00:00</div>
+                <div class="clock-date-info">
+                    <span class="clock-date">2026-01-01</span>
+                    <span class="clock-weekday">星期一</span>
+                </div>
+            </div>
             <button id="theme-toggle" class="icon-button" title="切换主题">
                 <span class="iconify" data-icon="ph:sun-bold"></span>
             </button>
-            <button id="bg-toggle" class="icon-button" title="切换背景类型">
-                <span class="iconify" data-icon="ph:image-bold"></span>
-            </button>
-            <button id="bg-refresh-btn" class="icon-button hidden" title="刷新壁纸">
-                <span class="iconify" data-icon="ph:arrow-clockwise-bold"></span>
-            </button>
+            <!-- 删除的: 背景切换和刷新按钮 -->
+            <!-- 新增的: GitHub 链接 (href将由JS动态设置) -->
+            <a id="github-link" href="#" target="_blank" rel="noopener noreferrer" class="icon-button" title="访问项目主页">
+                <span class="iconify" data-icon="mingcute:github-line"></span>
+            </a>
         </div>
         
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="搜索网站...">
-        </div>
+      
 
         <h1 id="site-title">我的导航</h1>
         <p id="site-subtitle">Welcome to My Navigation</p>
-
-        <div id="clock-widget" class="widget">00:00:00</div>
+      
+     
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="搜索网站...">
+        </div>
     </header>
 
     <main id="content"></main>

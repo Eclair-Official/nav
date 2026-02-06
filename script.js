@@ -6,34 +6,75 @@ document.addEventListener('DOMContentLoaded', () => {
     const content = document.getElementById('content');
     const searchInput = document.getElementById('search-input');
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const bgToggleBtn = document.getElementById('bg-toggle');
-    const bgRefreshBtn = document.getElementById('bg-refresh-btn');
     const clockWidget = document.getElementById('clock-widget');
     const siteTitle = document.getElementById('site-title');
     const siteSubtitle = document.getElementById('site-subtitle');
+    const githubLink = document.getElementById('github-link'); // 新增
 
-    let currentBgType = 'gradient';
+    let currentBgType = siteConfig.background.defaultType;
     let currentTheme = 'dark';
-    let availableThemes = Object.keys(window.siteConfig.themes);
+    const availableThemes = Object.keys(window.siteConfig.themes);
     let bgIntervalId;
     
-    // --- 2. 核心渲染函数 ---
-    function renderCards(data) { /* ... 保持不变 ... */ 
-        content.innerHTML = ''; if (!data || data.length === 0) { content.innerHTML = '<p id="no-results">没有找到匹配的网站。</p>'; return; }
-        data.forEach(category => { const categorySection = document.createElement('section'); categorySection.classList.add('nav-category'); const categoryTitle = document.createElement('h2'); categoryTitle.classList.add('category-title'); categoryTitle.textContent = category.category; categorySection.appendChild(categoryTitle); const cardGrid = document.createElement('div'); cardGrid.classList.add('nav-cards');
-        category.items.forEach(item => { const card = document.createElement('a'); card.href = item.url; card.classList.add('nav-card'); card.target = '_blank'; card.rel = 'noopener noreferrer';
-        card.innerHTML = `<span class="iconify" data-icon="${item.icon || 'simple-icons:default-icon'}"></span><div class="card-title">${item.name}</div><div class="card-description">${item.description}</div>`; cardGrid.appendChild(card); });
-        categorySection.appendChild(cardGrid); content.appendChild(categorySection); });
+    // --- 2. 核心渲染函数 (已格式化优化) ---
+    function renderCards(data) {
+        content.innerHTML = ''; 
+
+        if (!data || data.length === 0) {
+            content.innerHTML = '<p id="no-results">没有找到匹配的网站。</p>';
+            return;
+        }
+
+        data.forEach(category => {
+            const categorySection = document.createElement('section');
+            categorySection.classList.add('nav-category');
+
+            const categoryTitle = document.createElement('h2');
+            categoryTitle.classList.add('category-title');
+            categoryTitle.textContent = category.category;
+            categorySection.appendChild(categoryTitle);
+
+            const cardGrid = document.createElement('div');
+            cardGrid.classList.add('nav-cards');
+
+            category.items.forEach(item => {
+                const card = document.createElement('a');
+                card.href = item.url;
+                card.classList.add('nav-card');
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+                
+                card.innerHTML = `
+                    <span class="iconify" data-icon="${item.icon || 'simple-icons:default-icon'}"></span>
+                    <div class="card-title">${item.name}</div>
+                    <div class="card-description">${item.description}</div>
+                `;
+                cardGrid.appendChild(card);
+            });
+
+            categorySection.appendChild(cardGrid);
+            content.appendChild(categorySection);
+        });
     }
 
     // --- 3. 搜索功能 ---
-    searchInput.addEventListener('input', (e) => { /* ... 保持不变 ... */
-        const searchTerm = e.target.value.toLowerCase(); if (!searchTerm) { renderCards(window.navData); return; }
-        const filteredData = window.navData.map(category => ({ ...category, items: category.items.filter(item => item.name.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm)) })).filter(category => category.items.length > 0);
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        if (!searchTerm) {
+            renderCards(window.navData);
+            return;
+        }
+        const filteredData = window.navData.map(category => ({
+            ...category,
+            items: category.items.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || 
+                item.description.toLowerCase().includes(searchTerm)
+            )
+        })).filter(category => category.items.length > 0);
         renderCards(filteredData);
     });
 
-    // --- 4. 主题切换功能 (核心更新) ---
+    // --- 4. 主题切换功能 (已优化) ---
     function applyTheme(themeName) {
         if (!siteConfig.themes[themeName]) return;
         
@@ -41,20 +82,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const theme = siteConfig.themes[themeName];
         const root = document.documentElement;
 
-        // 将主题颜色注入到CSS变量中
         root.style.setProperty('--card-bg', theme.cardBg);
         root.style.setProperty('--text-primary', theme.textPrimary);
         root.style.setProperty('--text-secondary', theme.textSecondary);
+        root.style.setProperty('--title-color', theme.titleColor); // 优化
+        root.style.setProperty('--subtitle-color', theme.subtitleColor); // 优化
         root.style.setProperty('--primary', theme.primary);
         root.style.setProperty('--secondary', theme.secondary);
         root.style.setProperty('--border', theme.border);
         root.style.setProperty('--shadow', theme.shadow);
 
-        // 更新图标
-        themeToggleBtn.innerHTML = `<span class="iconify" data-icon="${theme.name === '白天模式' ? 'ph:moon-bold' : 'ph:sun-bold'}"></span>`;
+        // 优化：使用配置项判断图标
+        themeToggleBtn.innerHTML = `<span class="iconify" data-icon="${theme.isLight ? 'ph:moon-bold' : 'ph:sun-bold'}"></span>`;
         
         localStorage.setItem('theme', themeName);
-        // 主题切换后，重新应用背景，以更新渐变色
+
+        // 主题切换后，重新应用背景，以更新可能的渐变色
         applyBackground(currentBgType);
     }
     
@@ -65,26 +108,96 @@ document.addEventListener('DOMContentLoaded', () => {
         applyTheme(nextThemeName);
     });
 
-    // --- 5. 背景切换与刷新功能 ---
-    function applyBackground(type) { /* ... 保持不变，但会使用新的背景配置 ... */
-        currentBgType = type; if (bgIntervalId) clearInterval(bgIntervalId); const { gradients, unsplash } = siteConfig.background;
-        if (type === 'unsplash') { bgRefreshBtn.classList.remove('hidden'); const setUnsplashBg = () => { const url = `https://source.unsplash.com/collection/${unsplash.collectionId}/1600x900`; document.body.style.backgroundImage = `url(${url}?${Date.now()})`; }; setUnsplashBg(); if (unsplash.refreshInterval > 0) { bgIntervalId = setInterval(setUnsplashBg, unsplash.refreshInterval * 1000); } }
-        else { bgRefreshBtn.classList.add('hidden'); document.body.style.backgroundImage = gradients[currentTheme] || gradients.dark; }
+    // --- 5. 背景应用功能 (已优化并保留) ---
+    function applyBackground(type) {
+        currentBgType = type;
+        if (bgIntervalId) clearInterval(bgIntervalId);
+        
+        const { gradients, unsplash, defaultGradient } = siteConfig.background;
+
+        if (type === 'unsplash') {
+            const setUnsplashBg = () => {
+                const img = new Image();
+                img.src = `https://source.unsplash.com/collection/${unsplash.collectionId}/1600x900`;
+                img.onload = () => document.body.style.backgroundImage = `url(${img.src})`;
+                img.onerror = () => {
+                    console.error("Unsplash image failed to load. Falling back to gradient.");
+                    document.body.style.backgroundImage = defaultGradient;
+                };
+            };
+            setUnsplashBg();
+            if (unsplash.refreshInterval > 0) {
+                bgIntervalId = setInterval(setUnsplashBg, unsplash.refreshInterval * 1000);
+            }
+        } else { // gradient
+            document.body.style.backgroundImage = gradients[currentTheme] || defaultGradient;
+        }
+        
         localStorage.setItem('backgroundType', type);
     }
-    bgToggleBtn.addEventListener('click', () => { const newType = currentBgType === 'gradient' ? 'unsplash' : 'gradient'; applyBackground(newType); });
-    bgRefreshBtn.addEventListener('click', () => { if(currentBgType === 'unsplash') { const url = `https://source.unsplash.com/collection/${siteConfig.background.unsplash.collectionId}/1600x900`; document.body.style.backgroundImage = `url(${url}?${Date.now()})`; }});
 
     // --- 6. 时钟功能 --- 
-    function updateClock() { const now = new Date(); clockWidget.textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`; }
+    // function updateClock() {
+    //     const now = new Date();
+    //     clockWidget.textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    // }
+// --- 6. 时钟功能 (已优化) --- 
+function updateClock() {
+    const now = new Date();
 
-    // --- 7. 页面初始化 ---
+    // 获取时间部分
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timeString = `${hours}:${minutes}:${seconds}`;
+
+    // 获取日期部分
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${day}`;
+    
+    // 获取星期部分
+    const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    const weekdayString = weekdays[now.getDay()];
+
+    // 更新DOM内容
+    const timeElement = document.querySelector('.clock-time');
+    const dateElement = document.querySelector('.clock-date');
+    const weekdayElement = document.querySelector('.clock-weekday');
+
+    if (timeElement) timeElement.textContent = timeString;
+    if (dateElement) dateElement.textContent = dateString;
+    if (weekdayElement) weekdayElement.textContent = weekdayString;
+}
+    // --- 7. 页面初始化 (已精简和优化) ---
     function init() {
-        if (window.siteConfig) { document.title = siteConfig.title; siteTitle.textContent = siteConfig.title; siteSubtitle.textContent = siteConfig.subtitle; }
-        const savedTheme = localStorage.getItem('theme'); applyTheme(savedTheme && availableThemes.includes(savedTheme) ? savedTheme : 'dark');
-        const savedBgType = localStorage.getItem('backgroundType'); applyBackground(savedBgType || siteConfig.background.defaultType);
-        updateClock(); setInterval(updateClock, 1000);
+        // 应用网站配置
+        if (window.siteConfig) {
+            document.title = siteConfig.title;
+            siteTitle.textContent = siteConfig.title;
+            siteSubtitle.textContent = siteConfig.subtitle;
+            // 优化：动态设置GitHub链接
+            if (githubLink && siteConfig.githubRepoUrl) {
+                githubLink.href = siteConfig.githubRepoUrl;
+            }
+        }
+
+        // 恢复或应用默认主题
+        const savedTheme = localStorage.getItem('theme');
+        const initialTheme = savedTheme && availableThemes.includes(savedTheme) ? savedTheme : 'dark';
+        
+        // 应用背景类型（从localStorage或配置中获取）
+        const savedBgType = localStorage.getItem('backgroundType');
+        const initialBgType = savedBgType || siteConfig.background.defaultType;
+
+        applyTheme(initialTheme);
+        applyBackground(initialBgType);
+        
+        updateClock();
+        setInterval(updateClock, 1000);
         renderCards(window.navData);
     }
+
     init();
 });
