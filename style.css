@@ -321,3 +321,141 @@ footer {
         gap: 1rem;
     }
 }
+/* ==========================================================================
+   5. Iframe 视图样式
+   ========================================================================== */
+
+.iframe-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--card-bg, #fff); /* 使用主题背景色 */
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s 0.4s;
+}
+
+.iframe-view.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Iframe 控制栏 */
+.iframe-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.iframe-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.iframe-address-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+}
+
+.iframe-address-bar .iconify {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+#iframe-url-input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.iframe-control-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.iframe-control-btn:hover {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+/* Iframe 主体 */
+.iframe-main {
+    flex-grow: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+#content-iframe {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 加载指示器 */
+.iframe-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    z-index: 1001;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.iframe-loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

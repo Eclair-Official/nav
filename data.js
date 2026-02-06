@@ -6,15 +6,15 @@
 
 window.siteConfig = {
     // --- 基本信息 ---
-    title: "Eclair的导航",
-    subtitle: "Stay Hungry, Stay Foolish.",
-    githubRepoUrl: "https://github.com/YOUR_USERNAME/YOUR_REPO",
+    title: 'Eclair的导航',
+    subtitle: 'Stay Hungry, Stay Foolish.',
+    githubRepoUrl: 'https://github.com/YOUR_USERNAME/YOUR_REPO',
     // --- 新增：Footer 配置 ---
     footer: {
         // 自定义你的版权信息
-        copyright: "© 2026 MyNav. All Rights Reserved.",
+        copyright: '© 2026 MyNav. All Rights Reserved.',
         // 自定义你的技术栈或说明
-        poweredBy: "Powered with ❤️ by GitHub Pages.",
+        poweredBy: 'Powered with ❤️ by GitHub Pages.'
         // 你还可以添加更多内容，例如链接
         // extraLinks: [
         //     { name: "隐私政策", url: "#" },
@@ -23,69 +23,68 @@ window.siteConfig = {
     },
     // --- 默认图标配置 ---
     // 当导航项未指定图标时使用
-    defaultIcon: "material-symbols:link",
+    defaultIcon: 'material-symbols:link',
 
     // --- 主题配置 (完全可自定义) ---
     // 每个主题对象包含其所有视觉变量
     themes: {
         dark: {
-            name: "深夜模式",
+            name: '深夜模式',
             isLight: false,
-            cardBg: "rgba(30, 30, 40, 0.7)",
-            textPrimary: "#E0E0E0",
-            textSecondary: "#B0BEC5",
-            titleColor: "#ffffff",
-            subtitleColor: "#f0f0f0",
-            primary: "#BB86FC",
-            secondary: "#03DAC6",
-            border: "rgba(255, 255, 255, 0.1)",
-            shadow: "rgba(0, 0, 0, 0.3)",
+            cardBg: 'rgba(30, 30, 40, 0.7)',
+            textPrimary: '#E0E0E0',
+            textSecondary: '#B0BEC5',
+            titleColor: '#ffffff',
+            subtitleColor: '#f0f0f0',
+            primary: '#BB86FC',
+            secondary: '#03DAC6',
+            border: 'rgba(255, 255, 255, 0.1)',
+            shadow: 'rgba(0, 0, 0, 0.3)'
         },
         light: {
-            name: "白天模式",
+            name: '白天模式',
             isLight: true,
-            cardBg: "rgba(255, 255, 255, 0.8)",
-            textPrimary: "#1C1E21",
-            textSecondary: "#606770",
-            titleColor: "#1C1E21",
-            subtitleColor: "#606770",
-            primary: "#6750A4",
-            secondary: "#018786",
-            border: "rgba(0, 0, 0, 0.1)",
-            shadow: "rgba(0, 0, 0, 0.1)",
+            cardBg: 'rgba(255, 255, 255, 0.8)',
+            textPrimary: '#1C1E21',
+            textSecondary: '#606770',
+            titleColor: '#1C1E21',
+            subtitleColor: '#606770',
+            primary: '#6750A4',
+            secondary: '#018786',
+            border: 'rgba(0, 0, 0, 0.1)',
+            shadow: 'rgba(0, 0, 0, 0.1)'
         },
         cyberpunk: {
-            name: "赛博朋克",
+            name: '赛博朋克',
             isLight: false,
-            cardBg: "rgba(10, 25, 47, 0.8)",
-            textPrimary: "#00FFF0",
-            textSecondary: "#FF10F0",
-            titleColor: "#00FFF0",
-            subtitleColor: "#FFD700",
-            primary: "#FFD700",
-            secondary: "#00FFFF",
-            border: "rgba(255, 0, 255, 0.3)",
-            shadow: "rgba(0, 255, 255, 0.4)",
+            cardBg: 'rgba(10, 25, 47, 0.8)',
+            textPrimary: '#00FFF0',
+            textSecondary: '#FF10F0',
+            titleColor: '#00FFF0',
+            subtitleColor: '#FFD700',
+            primary: '#FFD700',
+            secondary: '#00FFFF',
+            border: 'rgba(255, 0, 255, 0.3)',
+            shadow: 'rgba(0, 255, 255, 0.4)'
         }
     },
 
     // --- 背景配置 ---
     background: {
-        defaultType: "gradient", // 'gradient' 或 'unsplash'
+        defaultType: 'gradient', // 'gradient' 或 'unsplash'
         // 保底渐变，当特定主题渐变未定义或外部资源加载失败时使用
-        defaultGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        defaultGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         gradients: {
-            dark: "linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)",
-            light: "linear-gradient(to top, #ffecd2 0%, #fcb69f 100%)",
-            cyberpunk: "linear-gradient(to right, #0f0c29, #302b63, #24243e)"
+            dark: 'linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)',
+            light: 'linear-gradient(to top, #ffecd2 0%, #fcb69f 100%)',
+            cyberpunk: 'linear-gradient(to right, #0f0c29, #302b63, #24243e)'
         },
         unsplash: {
-            collectionId: "a8qPq9h1P_M",
+            collectionId: 'a8qPq9h1P_M',
             refreshInterval: 60 // 单位：秒
         }
     }
-};
-
+}
 
 // =========================================================================
 // 2. 导航数据
@@ -93,33 +92,92 @@ window.siteConfig = {
 
 window.navData = [
     {
-        category: "终末地",
-        items: [{ name: "电量分流计算器", url: "/endfield-calculator/", description: "" }]
-           
+        category: '终末地',
+        items: [
+            {
+                name: '电量分流计算器',
+                url: 'https://eclair-official.github.io/endfield-calculator/',
+                description: '电量分流计算器',
+
+                target: 'iframe'
+            }
+        ]
     }
     // {
-    //     category: "常用工具",
-    //     items: [{ name: "终末地电量分流计算器", url: "https://github.com", description: "全球最大的代码托管平台", icon: "mingcute:github-line" }
-    //         // { name: "GitHub", url: "https://github.com", description: "全球最大的代码托管平台", icon: "mingcute:github-line" },
-    //         // { name: "Google", url: "https://www.google.com", description: "全球最大的搜索引擎", icon: "simple-icons:google" },
-    //         // { name: "ChatGPT", url: "https://chat.openai.com", description: "OpenAI 出品的大语言模型", icon: "simple-icons:openai" },
-    //         // { name: "Stack Overflow", url: "https://stackoverflow.com", description: "程序员的问答社区" } // 使用默认图标
+    //     category: '常用工具',
+    //     items: [
+    //         {
+    //             name: 'GitHub',
+    //             url: 'https://github.com',
+    //             description: '全球最大的代码托管平台',
+    //             icon: 'mingcute:github-line',
+    //             target: 'iframe'
+    //         },
+    //         {
+    //             name: 'Google',
+    //             url: 'https://www.google.com',
+    //             description: '全球最大的搜索引擎',
+    //             icon: 'simple-icons:google'
+    //         },
+    //         {
+    //             name: 'ChatGPT',
+    //             url: 'https://chat.openai.com',
+    //             description: 'OpenAI 出品的大语言模型',
+    //             icon: 'simple-icons:openai'
+    //         },
+    //         { name: 'Stack Overflow', url: 'https://stackoverflow.com', description: '程序员的问答社区' } // 使用默认图标
     //     ]
     // },
     // {
-    //     category: "开发学习",
+    //     category: '开发学习',
     //     items: [
-    //         { name: "MDN Web Docs", url: "https://developer.mozilla.org/zh-CN/", description: "Web 开发者的必读文档", icon: "simple-icons:mdnwebdocs" },
-    //         { name: "Vue.js", url: "https://cn.vuejs.org/", description: "渐进式 JavaScript 框架", icon: "simple-icons:vuedotjs" },
-    //         { name: "React", url: "https://react.dev/", description: "用于构建用户界面的 JS 库", icon: "simple-icons:react" },
+    //         {
+    //             name: 'MDN Web Docs',
+    //             url: 'https://developer.mozilla.org/zh-CN/',
+    //             description: 'Web 开发者的必读文档',
+    //             icon: 'simple-icons:mdnwebdocs',
+    //             target: 'iframe'
+    //         },
+    //         {
+    //             name: 'Vue.js',
+    //             url: 'https://cn.vuejs.org/',
+    //             description: '渐进式 JavaScript 框架',
+    //             icon: 'simple-icons:vuedotjs',
+    //             target: 'iframe'
+    //         },
+    //         {
+    //             name: 'React',
+    //             url: 'https://react.dev/',
+    //             description: '用于构建用户界面的 JS 库',
+    //             icon: 'simple-icons:react',
+    //             target: 'iframe'
+    //         }
     //     ]
     // },
     // {
-    //     category: "休闲娱乐",
+    //     category: '休闲娱乐',
     //     items: [
-    //         { name: "YouTube", url: "https://www.youtube.com", description: "全球最大的视频分享网站", icon: "simple-icons:youtube" },
-    //         { name: "Bilibili", url: "https://www.bilibili.com", description: "国内知名的视频弹幕网站", icon: "simple-icons:bilibili" },
-    //         { name: "IMDb", url: "https://www.imdb.com", description: "互联网电影资料库", icon: "simple-icons:imdb" },
+    //         {
+    //             name: 'YouTube',
+    //             url: 'https://www.youtube.com',
+    //             description: '全球最大的视频分享网站',
+    //             icon: 'simple-icons:youtube'
+    //         },
+    //         {
+    //             name: 'Bilibili',
+    //             url: 'https://www.bilibili.com',
+    //             description: '国内知名的视频弹幕网站',
+    //             icon: 'simple-icons:bilibili',
+    //             target: 'iframe'
+    //         },
+    //         { name: 'IMDb', url: 'https://www.imdb.com', description: '互联网电影资料库', icon: 'simple-icons:imdb' }
     //     ]
     // }
-];
+]
+// --- 新增：Iframe 全局配置 ---
+// 这个配置不是必需的，但把它放在这里能更好地体现配置化的思想
+window.siteConfig.iframe = {
+    // 一些网站（如 Google, Facebook）不允许被 iframe 嵌入（X-Frame-Options 响应头）。
+    // 我们可以在这里维护一个黑名单，当用户尝试打开这些网站时，给出提示。
+    blockedHosts: ['www.google.com', 'facebook.com']
+}
