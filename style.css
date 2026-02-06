@@ -1,281 +1,266 @@
-/* style.css */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+/* ==========================================================================
+   导航页面样式表 | Navigation Page Stylesheet
+   ========================================================================== */
 
-/* --- 动态主题变量将由 JS 注入到 :root --- */
-/* 例如 :root { --card-bg: rgba(...); --title-color: #ffffff; } */
+/* --- Google Fonts ---
+   导入外部字体，用于时钟样式优化。
+   -------------------------------------------------------------------------- */
+   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
 
-body {
+
+   /* ==========================================================================
+      1. 全局与根变量
+      ========================================================================== */
+   /*
+      页面的动态主题变量将由 script.js 根据配置注入到 :root 选择器中。
+      例如：:root { --card-bg: rgba(...); --primary: #BB86FC; }
+   */
+   
+   /* body {
+       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+       color: var(--text-primary);
+       margin: 0;
+       padding: 0;
+       min-height: 100vh;
+       display: flex;
+       flex-direction: column;
+      
+       justify-content: center;
+       background-attachment: fixed;
+       transition: color 0.3s ease, background-image 0.5s ease;
+   } */
+   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-primary);
     margin: 0;
-    padding: 0;
+    padding: 0; /* 确保为0 */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    /* --- 关键修改：移除 justify-content ---
+       之前的居中逻辑现在由 JS 的动态 padding 精确控制。
+    */
     background-attachment: fixed;
     transition: color 0.3s ease, background-image 0.5s ease;
 }
+   
+   /* ==========================================================================
+      2. 布局区域
+      ========================================================================== */
+   
+   /* --- 头部 --- */
 
-/* --- 毛玻璃效果通用类 --- */
-.glass-effect {
-    background-color: var(--card-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 32px var(--shadow);
-}
+   /* 优化：右侧控制按钮组 */
+   .controls {
+       display: flex;
+       gap: 0.5rem;
+   }
 
-/* --- 头部与底部 --- */
+/* --- 头部 (已优化为动态高度) --- */
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     text-align: center;
-    padding: 2rem 1rem;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.1);
+    /* --- 关键修改：移除固定的 padding，改用 min-height --- */
+    padding: 0.8rem 1rem; /* 只保留小的内边距，用于呼吸 */
+    min-height: 60px; /* 设置一个最小高度，防止内容过少时头部太扁 */
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.05);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
+    z-index: 10;
 }
 
-footer {
-    margin-top: auto;
-    padding: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    text-align: center;
-    background-color: rgba(0,0,0,0.1);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-}
-
-/* --- 控制按钮 --- */
-.controls {
+/* --- 顶部控制区域容器 --- */
+.header-top-controls {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
-    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    /* --- 关键修改：padding 由父级 header 控制，这里可以移除 --- */
+    padding: 0.8rem 1rem; /* 保持与 header 一致的 padding，使时钟和按钮垂直居中 */
+    box-sizing: border-box;
 }
 
-.icon-button,
-#github-link { /* 将 GitHub 链接样式与按钮统一 */
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
+/* --- 行内标题区域 (如果已使用) --- */
+.site-header-inline {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-    color: var(--text-primary);
-    /* 应用毛玻璃效果 */
-    background-color: var(--card-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    text-decoration: none; /* 去除链接下划线 */
-}
-
-.icon-button:hover,
-#github-link:hover {
-    transform: scale(1.1);
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-/* --- 搜索框 --- */
-.search-container {
-    max-width: 500px;
-    margin: 2rem auto 1.5rem auto;
-    width: 100%;
-    padding: 0 1rem;
-}
-
-#search-input {
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 1rem;
-    border-radius: 50px;
-    color: var(--text-primary);
-    text-align: center;
-    outline: none;
-    transition: box-shadow 0.3s ease;
-    /* 应用毛玻璃效果 */
-    background-color: var(--card-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-}
-
-#search-input:focus {
-    box-shadow: 0 0 0 3px var(--primary);
-}
-
-/* --- 标题与小组件 --- */
-#site-title, #site-subtitle {
-    /* 优化：使用变量替代硬编码颜色 */
+    gap: 15px;
+    margin-top: 0.5rem; /* 增加与上方控件的间距 */
     color: var(--title-color);
     text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
 }
 
-#site-subtitle { 
-    color: var(--subtitle-color); 
-}
-
-/* .widget {
-    
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    font-family: 'Courier New', Courier, monospace;
-    color: var(--title-color); 
-    padding: 5px 15px;
-    border-radius: 20px;
-    display: inline-block;
-  
-    background-color: var(--card-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-}
- */
-/* ========================================================================== */
-/* ==              方案一：极简数字风 (默认应用此方案)                   == */
-/* ========================================================================== */
-#clock-widget {
-      margin-top: 1.5rem;
-    font-family: 'Orbitron', sans-serif; 
-    color: var(--primary);
-    text-align: center;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px var(--primary); 
-}
-
-.clock-time {
-    font-size: 2.5rem;
-    font-weight: 700;  
-    line-height: 1;
-}
-
-.clock-date-info {
-    font-size: 1rem;
-    opacity: 0.8;
-    margin-top: 0.5rem;
-    letter-spacing: 1px;
-}
-
-.clock-date, .clock-weekday {
-    font-weight: 400;
-}
-
-/* ========================================================================== */
-/* ==              方案二：经典仪表盘风 (如需使用，请注释掉上面的方案)      == */
-/* ========================================================================== */
-
-/* #clock-widget {
-    margin-top: 1.5rem;
-    font-family: 'Rajdhani', sans-serif; 
-    color: var(--text-primary); 
-    padding: 10px 20px; 
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px; 
-
-    background-color: var(--card-bg);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    text-shadow: 0 0 5px currentColor; 
-}
-
-.clock-time {
-    font-size: 2.2rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.clock-date-info {
-    display: flex;
-    flex-direction: column; 
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.clock-date, .clock-weekday {
-    line-height: 1.2;
-} */
 
 
-/* ========================================================================== */
-/* ==                           其他样式保持不变                           == */
-/* ========================================================================== */
 
-/* --- 响应式设计 --- (请确保在文件末尾)
-@media (max-width: 768px) {
-    #site-title { font-size: 2rem; }
-    .controls { top: 1rem; right: 1rem; }
-    .icon-button, #github-link { width: 38px; height: 38px; }
-    .nav-cards { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    
-    /* 为方案一添加响应式 */
-    .clock-time { font-size: 2rem; }
-    .clock-date-info { font-size: 0.9rem; }
 
-    /* 为方案二添加响应式 (如果使用) */
-    /*
-    #clock-widget { 
-        flex-direction: column; 
-        gap: 5px;
-        padding: 8px 15px;
-    }
-    .clock-time { font-size: 1.8rem; }
-    .clock-date-info { 
-        flex-direction: row; 
-        font-size: 0.8rem; 
-        gap: 10px;
-    }
-    */
-}
-/* --- 主体内容 --- */
-main#content {
-    max-width: 1200px;
-    margin: 2rem auto 0 auto;
-    padding: 0 1rem 2rem 1rem;
+
+
+
+
+
+
+
+
+   
+   /* --- 主体内容 --- */
+   main#content {
+
+       max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
-    flex-grow: 1;
+       /* 移除 flex-grow: 1，让 justify-content: center 起作用 */
+   }
+
+   
+   /* --- 底部 --- */
+   footer {
+       /* 优化：固定在底部 */
+     
+     
+       left: 0;
+       width: 100%;
+       padding: 1rem;
+       font-size: 0.9rem;
+       color: var(--text-secondary);
+       text-align: center;
+       background-color: rgba(0,0,0,0.05);
+       -webkit-backdrop-filter: blur(8px);
+       backdrop-filter: blur(8px);
+       border-top: 1px solid var(--border);
+      
+   }
+   
+   
+   /* ==========================================================================
+      3. 通用组件
+      ========================================================================== */
+   
+   /* --- 毛玻璃效果 --- */
+   .glass-effect {
+       background-color: var(--card-bg);
+       -webkit-backdrop-filter: blur(12px);
+       backdrop-filter: blur(12px);
+       border: 1px solid var(--border);
+       box-shadow: 0 8px 32px var(--shadow);
+   }
+   
+   /* --- 控制按钮与 GitHub 链接 --- */
+   .icon-button,
+   #github-link {
+       border-radius: 50%;
+       width: 44px;
+       height: 44px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       transition: transform 0.2s ease, background-color 0.3s ease;
+       color: var(--text-primary);
+       background-color: var(--card-bg);
+       -webkit-backdrop-filter: blur(12px);
+       backdrop-filter: blur(12px);
+       border: 1px solid var(--border);
+       text-decoration: none;
+   }
+   
+   .icon-button:hover,
+   #github-link:hover {
+       transform: scale(1.1);
+       background-color: rgba(255, 255, 255, 0.15);
+   }
+   
+   /* --- 时钟 --- */
+   #clock-widget {
+       /* 重置样式以适应新布局 */
+       margin: 0; /* 移除外边距 */
+       font-family: 'Orbitron', sans-serif;
+       color: var(--primary);
+       /* 优化：左对齐 */
+       text-align: left;
+       letter-spacing: 2px;
+       text-shadow: 0 0 8px var(--primary);
+   }
+   
+   .clock-time {
+       font-size: 1.8rem; /* 稍微调小字体以适应顶部 */
+       font-weight: 700;
+       line-height: 1;
+   }
+   
+   .clock-date-info {
+       font-size: 0.8rem;
+       opacity: 0.8;
+       margin-top: 0.2rem;
+       letter-spacing: 1px;
+   }
+   
+   .clock-date, .clock-weekday {
+       font-weight: 400;
+   }
+   
+
+  
+
+
+#site-title {
+    font-size: 2.5rem; /* 可以微调大小 */
+    margin: 0; /* 移除默认外边距 */
+    padding: 0;
+    border: none; /* 移除可能继承的边框 */
 }
 
-/* --- 导航分类与卡片 --- */
-.nav-category {
-    margin-bottom: 2.5rem;
+#site-subtitle {
+    font-size: 1.2rem; /* 调整副标题大小 */
+    margin: 0;
+    padding: 0;
+    color: var(--subtitle-color); /* 单独设置副标题颜色 */
+    position: relative;
 }
 
-.category-title {
-    font-size: 1.5rem;
-    color: var(--secondary);
-    border-bottom: 2px solid var(--secondary);
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+/* 添加一个优雅的分隔符 */
+#site-subtitle::before {
+    content: '';
+    position: absolute;
+    left: -10px; /* 根据 gap 调整位置 */
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%; /* 分隔符高度 */
+    width: 1.5px;
+    background-color: var(--subtitle-color);
+    opacity: 0.5;
 }
 
-.nav-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.nav-card {
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* --- (已更新) 主内容区域的搜索框 --- */
+.content-search-wrapper {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* 应用毛玻璃效果 */
+    justify-content: center; /* 水平居中 */
+   
+    margin-bottom: 2.5rem; /* 与下方卡片分类保持一致的间距 */
+}
+
+#search-input {
+    width: 100%; /* 在容器内占满宽度 */
+    max-width: 500px; /* 但最大宽度限制为500px，与原设计一致 */
+    padding: 15px 20px; /* 增大内边距，使其更显眼 */
+    font-size: 1rem;
+    border-radius: 12px; /* 调整为与卡片相似的圆角 */
+    color: var(--text-primary);
+    text-align: center;
+    outline: none;
+    transition: all 0.3s ease;
+    /* 应用毛玻璃效果，与卡片风格统一 */
     background-color: var(--card-bg);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
@@ -283,55 +268,140 @@ main#content {
     box-shadow: 0 8px 32px var(--shadow);
 }
 
-.nav-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 40px var(--shadow);
-    background-color: rgba(255, 255, 255, 0.2);
+#search-input:focus {
+    border-color: var(--primary); /* 聚焦时边框变色 */
+    box-shadow: 0 0 0 3px var(--primary), 0 8px 32px var(--shadow); /* 保留阴影并增加光晕 */
+    transform: scale(1.02); /* 聚焦时轻微放大 */
 }
 
-.nav-card .iconify {
-    font-size: 3rem;
-    margin-bottom: 0.8rem;
-    color: var(--primary);
-    transition: transform 0.3s ease;
-}
-
-.nav-card:hover .iconify {
-    transform: rotate(15deg) scale(1.1);
-}
-
-.nav-card .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0;
-}
-
-.nav-card .card-description {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+/* --- 主标题行布局 (之前已修改，确认无误) --- */
+.main-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
     margin-top: 0.5rem;
 }
 
-/* --- 搜索无结果提示 --- */
-#no-results {
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    padding: 3rem 1rem;
-}
+   /* --- 导航分类与卡片 --- */
+   .nav-category {
+       margin-bottom: 2.5rem;
+   }
+   
+   .category-title {
+       font-size: 1.5rem;
+       color: var(--secondary);
+       border-bottom: 2px solid var(--secondary);
+       padding-bottom: 0.5rem;
+       margin-bottom: 1rem;
+   }
+   
+   .nav-cards {
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+       gap: 1.5rem;
+   }
+   
+   .nav-card {
+       border-radius: 12px;
+       padding: 1.5rem;
+       text-align: center;
+       text-decoration: none;
+       color: var(--text-primary);
+       transition: transform 0.3s ease, box-shadow 0.3s ease;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       background-color: var(--card-bg);
+       -webkit-backdrop-filter: blur(12px);
+       backdrop-filter: blur(12px);
+       border: 1px solid var(--border);
+       box-shadow: 0 8px 32px var(--shadow);
+   }
+   
+   .nav-card:hover {
+       transform: translateY(-8px) scale(1.02);
+       box-shadow: 0 12px 40px var(--shadow);
+       background-color: rgba(255, 255, 255, 0.2);
+   }
+   
+   .nav-card .iconify {
+       font-size: 3rem;
+       margin-bottom: 0.8rem;
+       color: var(--primary);
+       transition: transform 0.3s ease;
+   }
+   
+   .nav-card:hover .iconify {
+       transform: rotate(15deg) scale(1.1);
+   }
+   
+   .nav-card .card-title {
+       font-size: 1.2rem;
+       font-weight: bold;
+       margin: 0;
+   }
+   
+   .nav-card .card-description {
+       font-size: 0.9rem;
+       color: var(--text-secondary);
+       margin-top: 0.5rem;
+   }
+   
+   /* --- 搜索无结果提示 --- */
+   #no-results {
+       text-align: center;
+       font-size: 1.2rem;
+       color: var(--text-secondary);
+       padding: 3rem 1rem;
+   }
+   
+   
+   /* ==========================================================================
+      4. 响应式设计
+      ========================================================================== */
+   @media (max-width: 768px) {
+       #site-title { font-size: 2rem; }
+       
+       .header-top-controls {
+           padding: 1rem;
+       }
+   
+       .icon-button, #github-link {
+           width: 38px;
+           height: 38px;
+       }
+       .site-header-inline {
+        flex-direction: column; /* 在小屏幕上垂直堆叠 */
+        gap: 5px;
+    }
+
+    #site-subtitle::before {
+        display: none; /* 隐藏分隔符 */
+    }
 
 
-/* --- 响应式设计 --- */
-@media (max-width: 768px) {
-    #site-title { font-size: 2rem; }
-    .controls { top: 1rem; right: 1rem; }
-    .icon-button, #github-link { width: 38px; height: 38px; }
-    .nav-cards { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-}
 
-/* --- 删除的 .hidden 类 --- */
-/*
-.hidden {
-    display: none !important;
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+       #clock-widget .clock-time { font-size: 1.5rem; }
+       #clock-widget .clock-date-info { font-size: 0.7rem; }
+   
+       .nav-cards {
+           grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+           gap: 1rem;
+       }
+   }
