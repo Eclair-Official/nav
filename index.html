@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的导航</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://www.google.com/favicon.ico">
+</head>
+<body>
+
+    <header>
+        <div class="controls">
+            <button id="theme-toggle" class="icon-button" title="切换主题">
+                <span class="iconify" data-icon="ph:sun-bold"></span>
+            </button>
+            <button id="bg-toggle" class="icon-button" title="切换背景类型">
+                <span class="iconify" data-icon="ph:image-bold"></span>
+            </button>
+            <button id="bg-refresh-btn" class="icon-button hidden" title="刷新壁纸">
+                <span class="iconify" data-icon="ph:arrow-clockwise-bold"></span>
+            </button>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="搜索网站...">
+        </div>
+
+        <h1 id="site-title">我的导航</h1>
+        <p id="site-subtitle">Welcome to My Navigation</p>
+
+        <div id="clock-widget" class="widget">00:00:00</div>
+    </header>
+
+    <main id="content"></main>
+
+    <footer>
+        <p>&copy; 2026 MyNav. Powered by GitHub Pages.</p>
+    </footer>
+
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
