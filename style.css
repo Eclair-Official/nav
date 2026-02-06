@@ -325,8 +325,9 @@ footer {
     .header-top-controls {
         position: absolute;
        /* 覆盖掉 absolute */
-        padding: 0;       /* 移除原有的 padding */
+        padding:  0.5rem  3rem;       /* 移除原有的 padding */
         flex-shrink: 0;   /* 防止控件被压缩 */
+       /* 与右侧边距保持距离 */
     }
 
     /* 标题区域占据剩余空间 */
