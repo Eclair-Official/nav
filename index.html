@@ -1,69 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>我的导航</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="https://www.google.com/favicon.ico" />
-</head>
-<body>
-    <header>
-        <div class="header-top-controls">
-            <div id="clock-widget" class="widget" aria-live="polite">
-                <div class="clock-time">00:00:00</div>
-                <div class="clock-date-info">
-                    <span class="clock-date">2026-01-01</span>
-                    <span class="clock-weekday">星期一</span>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>我的导航</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="icon" href="https://www.google.com/favicon.ico" />
+    </head>
+    <body>
+        <header>
+            <div class="header-top-controls">
+                <div id="clock-widget" class="widget" aria-live="polite">
+                    <div class="clock-time">00:00:00</div>
+                    <div class="clock-date-info">
+                        <span class="clock-date">2026-01-01</span>
+                        <span class="clock-weekday">星期一</span>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button id="theme-toggle" class="icon-button" title="切换主题" aria-label="切换主题">
+                        <span class="iconify" data-icon="ph:sun-bold" aria-hidden="true"></span>
+                    </button>
+                    <a
+                        id="github-link"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="icon-button"
+                        title="访问项目主页"
+                        aria-label="访问项目主页"
+                    >
+                        <span class="iconify" data-icon="mingcute:github-line" aria-hidden="true"></span>
+                    </a>
                 </div>
             </div>
 
-            <div class="controls">
-                <button id="theme-toggle" class="icon-button" title="切换主题" aria-label="切换主题">
-                    <span class="iconify" data-icon="ph:sun-bold" aria-hidden="true"></span>
-                </button>
-                <a
-                    id="github-link"
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="icon-button"
-                    title="访问项目主页"
-                    aria-label="访问项目主页"
-                >
-                    <span class="iconify" data-icon="mingcute:github-line" aria-hidden="true"></span>
-                </a>
+            <div class="site-header-inline">
+                <h1 id="site-title">我的导航</h1>
+                <p id="site-subtitle">Welcome to My Navigation</p>
             </div>
-        </div>
+        </header>
 
-        <div class="site-header-inline">
-            <h1 id="site-title">我的导航</h1>
-            <p id="site-subtitle">Welcome to My Navigation</p>
-        </div>
-    </header>
+        <main id="content" role="main" aria-label="导航链接区域">
+            <div class="content-search-wrapper">
+                <input
+                    type="search"
+                    id="search-input"
+                    placeholder="搜索网站..."
+                    autocomplete="off"
+                    aria-label="搜索网站"
+                />
+            </div>
+            <div id="content-item" class="nav-grid"></div>
+            <div style="width: 100%; height: 90vh; border: none">
+                <iframe src="/endfield-calculator/" width="100%" height="100%" frameborder="0"> </iframe>
+            </div>
+        </main>
 
-    <main id="content" role="main" aria-label="导航链接区域">
-        <div class="content-search-wrapper">
-            <input type="search" id="search-input" placeholder="搜索网站..." autocomplete="off" aria-label="搜索网站" />
-        </div>
-        <div id="content-item" class="nav-grid"></div>
-        <div style="width: 100%; height: 90vh; border: none;">
-            <iframe 
-              src="https://eclair-official.github.io/endfield-calculator/" 
-              width="100%" 
-              height="100%" 
-              frameborder="0">
-            </iframe>
-          </div>
-    </main>
+        <footer id="site-footer">
+            <!-- 内容将由 script.js 根据 data.js 的配置动态生成 -->
+        </footer>
 
-    <footer id="site-footer">
-        <!-- 内容将由 script.js 根据 data.js 的配置动态生成 -->
-    </footer>
-
-    <!-- Scripts at the end for better performance -->
-    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
-    <script src="data.js"></script>
-    <script src="script.js"></script>
-</body>
+        <!-- Scripts at the end for better performance -->
+        <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+        <script src="data.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
