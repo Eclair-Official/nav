@@ -64,7 +64,7 @@ header {
 
 /* --- 顶部控制区域容器 --- */
 .header-top-controls {
-position: absolute;
+
    position: absolute;
     top: 0;
     left: 0;
@@ -119,7 +119,7 @@ footer {
 /* --- 控制按钮与 GitHub 链接 --- */
 .controls {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.5rem;    
 }
 
 .icon-button,
@@ -232,6 +232,8 @@ footer {
 /* --- 导航分类与卡片 --- */
 .nav-category {
     margin-bottom: 2.5rem;
+    margin-left: 2rem;
+    width: calc(100% - 4rem); /* 减去左右 margin */
 }
 
 .category-title {
@@ -317,30 +319,65 @@ footer {
    ========================================================================== */
 @media (max-width: 768px) {
 
-
-    #site-title { font-size: 2rem; }
-    #site-subtitle { font-size: 1rem; }
-
-    .icon-button, #github-link {
-        width: 38px;
-        height: 38px;
+ /* --- 1. 修复 Header 布局 --- */
+ 
+    /* 顶部控件区域不再需要绝对定位 */
+    .header-top-controls {
+        position: absolute;
+       /* 覆盖掉 absolute */
+        padding: 0;       /* 移除原有的 padding */
+        flex-shrink: 0;   /* 防止控件被压缩 */
     }
 
+    /* 标题区域占据剩余空间 */
     .site-header-inline {
-        flex-direction: column;
-        gap: 5px;
+        display: inline;
+        flex-grow: 1;     /* 允许标题区域占据剩余空间 */
+        text-align: left; /* 文字居中 */
+        margin-top: 0;    /* 移除上边距 */
+        margin-left: 1rem; /* 与左侧控件保持距离 */
     }
 
     #site-subtitle::before {
         display: none;
     }
 
-    #clock-widget .clock-time { font-size: 1.5rem; }
-    #clock-widget .clock-date-info { font-size: 0.7rem; }
+    /* --- 2. 调整字体大小以适应窄屏 --- */
+    #site-title {
+        font-size: 1.8rem;
+    }
+    #site-subtitle {
+        display: none;
+    }
+    
 
+
+    /* --- 3. 【核心修改】隐藏时钟组件 --- */
+    #clock-widget {
+     opacity: 0;/* 在移动端隐藏时钟，为标题和控件腾出空间 */
+    }
+
+    /* --- 4. 调整控件大小 --- */
+    .icon-button,
+    #github-link {
+        width: 38px;
+        height: 38px;
+    }
+
+    /* --- 5. 其他响应式调整 --- */
     .nav-cards {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 1rem;
+    }
+    
+    .content-search-wrapper {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+        width: calc(100% - 4rem); /* 减去左右 margin */
+      
+     
+      
     }
 }
 

@@ -205,7 +205,7 @@ function renderCards(data) {
 
             const icon = item.icon || window.siteConfig.defaultIcon
             card.innerHTML = `
-                <span class="iconify" data-icon="${icon}" data-fallback="链接"></span>
+              <span class="iconify" data-icon="${icon}" data-fallback="${item.name.charAt(0)}"></span>
                 <div class="card-title">${item.name}</div>
                 <div class="card-description">${item.description}</div>
             `
