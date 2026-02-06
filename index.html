@@ -8,7 +8,7 @@
         <link rel="icon" href="https://www.google.com/favicon.ico" />
     </head>
     <body>
-        <header>
+        <header id="main-header">
             <div class="header-top-controls">
                 <div id="clock-widget" class="widget" aria-live="polite">
                     <div class="clock-time">00:00:00</div>
@@ -55,7 +55,7 @@
             <div id="content-item" class="nav-grid"></div>
             <div id="iframe-view" class="iframe-view">
                 <!-- 浏览器控制栏 -->
-                <header class="iframe-header">
+                <header id="iframe-header" class="iframe-header">
                     <div class="iframe-nav-controls">
                         <!-- 地址栏 -->
                         <div class="iframe-address-bar">
@@ -80,14 +80,6 @@
                             <span class="iconify" data-icon="tabler:arrow-right"></span>
                         </button>
                         <button
-                            id="iframe-home-btn"
-                            class="icon-button iframe-control-btn"
-                            title="返回主页"
-                            aria-label="返回主页"
-                        >
-                            <span class="iconify" data-icon="tabler:home"></span>
-                        </button>
-                        <button
                             id="iframe-refresh-btn"
                             class="icon-button iframe-control-btn"
                             title="刷新"
@@ -108,7 +100,7 @@
                 </header>
 
                 <!-- 内容区域 -->
-                <main class="iframe-main">
+                <main id="iframe-main" class="iframe-main">
                     <iframe
                         id="content-iframe"
                         title="网站内容"

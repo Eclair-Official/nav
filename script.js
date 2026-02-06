@@ -24,8 +24,19 @@ function debounce(func, delay) {
 // 2. 应用状态与元素获取
 // =========================================================================
 
-// --- DOM 元素 ---
-const elements = {
+// --- 应用状态 ---
+const state = {
+    currentBgType: window.siteConfig.background.defaultType,
+    currentTheme: 'dark',
+    availableThemes: Object.keys(window.siteConfig.themes),
+    bgIntervalId: null
+}
+
+// --- 元素获取函数 ---
+
+// --- 全局 elements 对象 ---
+let elements = {
+    header: document.getElementById('main-header'),
     content: document.getElementById('content-item'),
     searchInput: document.getElementById('search-input'),
     themeToggleBtn: document.getElementById('theme-toggle'),
@@ -44,16 +55,116 @@ const elements = {
     iframeBackBtn: document.getElementById('iframe-back-btn'),
     iframeForwardBtn: document.getElementById('iframe-forward-btn'),
     iframeRefreshBtn: document.getElementById('iframe-refresh-btn'),
-    iframeHomeBtn: document.getElementById('iframe-home-btn'),
     iframeLoadingOverlay: document.querySelector('.iframe-loading-overlay')
 }
 
-// --- 应用状态 ---
-const state = {
-    currentBgType: window.siteConfig.background.defaultType,
-    currentTheme: 'dark',
-    availableThemes: Object.keys(window.siteConfig.themes),
-    bgIntervalId: null
+// =========================================================================
+// 3.5. Iframe 管理器
+// =========================================================================
+const IframeManager = {
+    init() {
+        // 绑定控制栏事件
+        elements.iframeCloseBtn.addEventListener('click', () => this.close())
+        elements.iframeRefreshBtn.addEventListener('click', () => this.refresh())
+        elements.iframeBackBtn.addEventListener('click', () => this.back())
+        elements.iframeForwardBtn.addEventListener('click', () => this.forward())
+
+        // 监听 iframe 加载和滚动
+        elements.contentIframe.addEventListener('load', () => this.handleLoad())
+
+        document.addEventListener('keydown', (e) => this.handleKeydown(e))
+    },
+
+    open(url) {
+        const { hostname } = new URL(url)
+        if (window.siteConfig.iframe.blockedHosts.includes(hostname)) {
+            alert(`安全提示：网站 "${hostname}" 不允许在 iframe 中嵌入，将为您在新标签页打开。`)
+            window.open(url, '_blank')
+            return
+        }
+
+        this.showLoading()
+        elements.iframeUrlInput.value = url
+        elements.contentIframe.src = url
+        // --- 修改开始 ---
+        // 1. 防止底层页面滚动
+        elements.body.style.overflow = 'hidden'
+        // 2. 暂停 setMainPadding 的影响，让弹层布局完全独立
+        elements.body.classList.add('iframe-view-is-active')
+        // --- 修改结束 ---
+
+        elements.iframeView.classList.add('active')
+    },
+
+    close() {
+        elements.iframeView.classList.remove('active')
+        elements.contentIframe.src = 'about:blank'
+        // --- 修改开始 ---
+        // 1. 恢复底层页面滚动
+        elements.body.style.overflow = ''
+        // 2. 恢复 setMainPadding 的正常工作
+        elements.body.classList.remove('iframe-view-is-active')
+        // --- 修改结束 ---
+    },
+
+    refresh() {
+        this.showLoading()
+        elements.contentIframe.src = elements.contentIframe.src
+    },
+
+    back() {
+        elements.contentIframe.contentWindow.history.back()
+    },
+
+    forward() {
+        elements.contentIframe.contentWindow.history.forward()
+    },
+
+    handleLoad() {
+        this.hideLoading()
+        this.updateAddressBar()
+        this.applyContentFullscreenStyles()
+    },
+
+    handleKeydown(e) {
+        if (!elements.iframeView.classList.contains('active')) return
+
+        if (e.key === 'Escape') {
+            this.close()
+        }
+    },
+
+    // --- 内容优化 ---
+    updateAddressBar() {
+        try {
+            elements.iframeUrlInput.value = elements.contentIframe.contentWindow.location.href
+        } catch (e) {
+            // 跨域时，保持显示初始URL
+        }
+    },
+
+    applyContentFullscreenStyles() {
+        const header = document.getElementById('iframe-header')
+
+        const main = document.getElementById('iframe-main')
+
+        if (!header || !main) {
+            console.warn('Layout elements not found, cannot set dynamic padding.')
+            return
+        }
+
+        const headerHeight = header.offsetHeight
+        main.style.paddingTop = `${headerHeight}px`
+    },
+
+    // --- UI 状态 ---
+    showLoading() {
+        elements.iframeLoadingOverlay.classList.remove('hidden')
+    },
+
+    hideLoading() {
+        elements.iframeLoadingOverlay.classList.add('hidden')
+    }
 }
 
 // =========================================================================
@@ -86,25 +197,11 @@ function renderCards(data) {
         const cardGrid = document.createElement('div')
         cardGrid.classList.add('nav-cards')
 
-        // for (const item of category.items) {
-        //     const card = document.createElement('a')
-        //     card.href = item.url
-        //     card.classList.add('nav-card')
-        //     card.target = '_blank'
-        //     card.rel = 'noopener noreferrer'
-
-        //     const icon = item.icon || window.siteConfig.defaultIcon
-        //     card.innerHTML = `
-        //         <span class="iconify" data-icon="${icon}" data-fallback="链接"></span>
-        //         <div class="card-title">${item.name}</div>
-        //         <div class="card-description">${item.description}</div>
-        //     `
-        //     cardGrid.appendChild(card)
-        // }
         for (const item of category.items) {
-            const card = document.createElement('div') // 改为 <div>，因为我们要自己处理点击
+            // 改为 <div>，因为我们要自己处理点击
+            const card = document.createElement('div')
             card.classList.add('nav-card')
-            card.style.cursor = 'pointer' // 添加指针样式
+            card.style.cursor = 'pointer'
 
             const icon = item.icon || window.siteConfig.defaultIcon
             card.innerHTML = `
@@ -124,78 +221,12 @@ function renderCards(data) {
 
             cardGrid.appendChild(card)
         }
+
         categorySection.appendChild(cardGrid)
         content.appendChild(categorySection)
     }
 }
 
-// =========================================================================
-// 3.5. Iframe 管理器
-// =========================================================================
-const IframeManager = {
-    elements: {
-        /* ... 可以传入 ... */
-    },
-    init() {
-        // 绑定控制栏事件
-        elements.iframeCloseBtn.addEventListener('click', () => this.close())
-        elements.iframeRefreshBtn.addEventListener('click', () => this.refresh())
-        elements.iframeBackBtn.addEventListener('click', () => this.back())
-        elements.iframeForwardBtn.addEventListener('click', () => this.forward())
-        elements.iframeHomeBtn.addEventListener('click', () => this.close())
-
-        // 监听 iframe 加载事件
-        elements.contentIframe.addEventListener('load', () => {
-            this.hideLoading()
-            elements.iframeUrlInput.value = elements.contentIframe.contentWindow.location.href
-        })
-    },
-
-    open(url) {
-        if (!this.elements) this.elements = elements // 确保元素已获取
-
-        // 检查是否在阻止列表中
-        const { hostname } = new URL(url)
-        if (window.siteConfig.iframe.blockedHosts.includes(hostname)) {
-            alert(`安全提示：网站 "${hostname}" 不允许在 iframe 中嵌入，将为您在新标签页打开。`)
-            window.open(url, '_blank')
-            return
-        }
-
-        this.showLoading()
-        elements.iframeUrlInput.value = url
-        elements.contentIframe.src = url
-        elements.body.style.overflow = 'hidden' // 防止底层页面滚动
-        elements.iframeView.classList.add('active')
-    },
-
-    close() {
-        elements.iframeView.classList.remove('active')
-        elements.contentIframe.src = 'about:blank' // 清空地址，停止加载
-        elements.body.style.overflow = '' // 恢复底层页面滚动
-    },
-
-    refresh() {
-        this.showLoading()
-        elements.contentIframe.src = elements.contentIframe.src
-    },
-
-    back() {
-        elements.contentIframe.contentWindow.history.back()
-    },
-
-    forward() {
-        elements.contentIframe.contentWindow.history.forward()
-    },
-
-    showLoading() {
-        elements.iframeLoadingOverlay.classList.remove('hidden')
-    },
-
-    hideLoading() {
-        elements.iframeLoadingOverlay.classList.add('hidden')
-    }
-}
 // =========================================================================
 // 4. 功能模块
 // -------------------------------------------------------------------------
@@ -223,10 +254,6 @@ const handleSearch = (e) => {
 elements.searchInput.addEventListener('input', debounce(handleSearch, 300))
 
 // --- 主题切换功能 ---
-/**
- * 应用指定的主题
- * @param {string} themeName - 主题名称
- */
 function applyTheme(themeName) {
     const { themes } = window.siteConfig
     if (!themes[themeName]) return
@@ -235,21 +262,17 @@ function applyTheme(themeName) {
     const theme = themes[themeName]
     const { root, themeToggleBtn } = elements
 
-    // 应用 CSS 变量
     for (const [key, value] of Object.entries(theme)) {
         if (typeof value === 'string') {
-            // 确保只处理颜色/字符串值
             root.style.setProperty(`--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, value)
         }
     }
 
-    // 切换按钮图标
     themeToggleBtn.innerHTML = `<span class="iconify" data-icon="${
         theme.isLight ? 'ph:moon-bold' : 'ph:sun-bold'
     }"></span>`
 
     localStorage.setItem('theme', themeName)
-    // 主题切换后，重新应用背景，以更新可能的渐变色
     applyBackground(state.currentBgType)
 }
 
@@ -260,10 +283,6 @@ elements.themeToggleBtn.addEventListener('click', () => {
 })
 
 // --- 背景应用功能 ---
-/**
- * 应用背景（渐变）
- * @param {string} type - 背景类型 ('gradient')
- */
 function applyBackground(type) {
     state.currentBgType = type
     if (state.bgIntervalId) clearInterval(state.bgIntervalId)
@@ -273,8 +292,6 @@ function applyBackground(type) {
     const { body } = elements
 
     body.style.backgroundImage = background.gradients[state.currentTheme] || background.defaultGradient
-
-    // localStorage.setItem('backgroundType', type);
 }
 
 // --- 时钟功能 ---
@@ -297,20 +314,25 @@ function updateClock() {
 
 // --- 动态布局功能 ---
 function setMainPadding() {
-    const header = document.querySelector('header')
-    const footer = document.querySelector('footer')
-    const main = document.querySelector('main#content')
+    // --- 新增：守卫条件 ---
+    // 如果 body 有 'iframe-view-is-active' 类，说明 iframe 弹层已打开，此时直接返回，不做任何布局计算。
+    if (document.body.classList.contains('iframe-view-is-active')) {
+        return
+    }
+    // --- 新增结束 ---
+
+    const header = document.getElementById('main-header')
+    const footer = document.getElementById('site-footer')
+    const main = document.getElementById('content')
 
     if (!header || !footer || !main) {
         console.warn('Layout elements not found, cannot set dynamic padding.')
         return
     }
 
-    // 1. 为固定的 header 留出空间
     const headerHeight = header.offsetHeight
     main.style.paddingTop = `${headerHeight}px`
 
-    // 2. 判断是否需要让页脚“吸底”
     const footerHeight = footer.offsetHeight
     const viewportHeight = window.innerHeight
     const mainContentHeight = main.scrollHeight - parseInt(main.style.paddingTop || 0)
@@ -330,20 +352,17 @@ window.addEventListener('resize', debounce(setMainPadding, 100))
 // -------------------------------------------------------------------------
 
 function init() {
-    // 应用网站配置
     if (window.siteConfig) {
         const { title, subtitle, githubRepoUrl, footer } = window.siteConfig
         document.title = title
         elements.siteTitle.textContent = title
         elements.siteSubtitle.textContent = subtitle
-        // script.js
         if (elements.githubLink && githubRepoUrl && !githubRepoUrl.includes('YOUR_USERNAME')) {
             elements.githubLink.href = githubRepoUrl
         } else {
-            elements.githubLink.style.display = 'none' // 或者添加一个警告
+            elements.githubLink.style.display = 'none'
             console.warn('GitHub repository URL is not configured correctly.')
         }
-        // --- 新增：应用 Footer 配置 ---
         if (elements.siteFooter && footer) {
             let footerHTML = ''
             if (footer.copyright) {
@@ -352,37 +371,24 @@ function init() {
             if (footer.poweredBy) {
                 footerHTML += `<p>${footer.poweredBy}</p>`
             }
-            // 如果未来添加了 extraLinks，可以在这里循环渲染
-            // if (footer.extraLinks && footer.extraLinks.length > 0) {
-            //     footerHTML += '<nav>';
-            //     footer.extraLinks.forEach(link => {
-            //         footerHTML += `<a href="${link.url}" target="_blank">${link.name}</a>`;
-            //     });
-            //     footerHTML += '</nav>';
-            // }
             elements.siteFooter.innerHTML = footerHTML
         }
     }
 
-    // 恢复或应用默认主题/背景
     const savedTheme = localStorage.getItem('theme')
     const initialTheme = savedTheme && state.availableThemes.includes(savedTheme) ? savedTheme : 'dark'
     applyTheme(initialTheme)
 
-    // const savedBgType = localStorage.getItem('backgroundType');
-    // const initialBgType = savedBgType || window.siteConfig.background.defaultType;
     applyBackground(window.siteConfig.background.defaultType)
 
-    // 启动功能
     updateClock()
     setInterval(updateClock, 1000)
     renderCards(window.navData)
-    // 使用 setTimeout 确保 DOM 和样式已完全渲染后再计算布局
 
-    // --- 初始化 Iframe Manager ---
+    // 初始化 Iframe Manager
     IframeManager.init()
+
     setTimeout(setMainPadding, 0)
 }
 
-// 当DOM加载完毕后初始化应用
 document.addEventListener('DOMContentLoaded', init)

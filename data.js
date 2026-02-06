@@ -128,51 +128,6 @@ window.navData = [
     //         { name: 'Stack Overflow', url: 'https://stackoverflow.com', description: '程序员的问答社区' } // 使用默认图标
     //     ]
     // },
-    // {
-    //     category: '开发学习',
-    //     items: [
-    //         {
-    //             name: 'MDN Web Docs',
-    //             url: 'https://developer.mozilla.org/zh-CN/',
-    //             description: 'Web 开发者的必读文档',
-    //             icon: 'simple-icons:mdnwebdocs',
-    //             target: 'iframe'
-    //         },
-    //         {
-    //             name: 'Vue.js',
-    //             url: 'https://cn.vuejs.org/',
-    //             description: '渐进式 JavaScript 框架',
-    //             icon: 'simple-icons:vuedotjs',
-    //             target: 'iframe'
-    //         },
-    //         {
-    //             name: 'React',
-    //             url: 'https://react.dev/',
-    //             description: '用于构建用户界面的 JS 库',
-    //             icon: 'simple-icons:react',
-    //             target: 'iframe'
-    //         }
-    //     ]
-    // },
-    // {
-    //     category: '休闲娱乐',
-    //     items: [
-    //         {
-    //             name: 'YouTube',
-    //             url: 'https://www.youtube.com',
-    //             description: '全球最大的视频分享网站',
-    //             icon: 'simple-icons:youtube'
-    //         },
-    //         {
-    //             name: 'Bilibili',
-    //             url: 'https://www.bilibili.com',
-    //             description: '国内知名的视频弹幕网站',
-    //             icon: 'simple-icons:bilibili',
-    //             target: 'iframe'
-    //         },
-    //         { name: 'IMDb', url: 'https://www.imdb.com', description: '互联网电影资料库', icon: 'simple-icons:imdb' }
-    //     ]
-    // }
 ]
 // --- 新增：Iframe 全局配置 ---
 // 这个配置不是必需的，但把它放在这里能更好地体现配置化的思想
