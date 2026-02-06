@@ -53,66 +53,77 @@
                 />
             </div>
             <div id="content-item" class="nav-grid"></div>
-        </main>
-        <div id="iframe-view" class="iframe-view">
-            <!-- 浏览器控制栏 -->
-            <header class="iframe-header">
-                <div class="iframe-nav-controls">
-                    <!-- 地址栏 -->
-                    <div class="iframe-address-bar">
-                        <span class="iconify" data-icon="tabler:world" aria-hidden="true"></span>
-                        <input id="iframe-url-input" type="text" readonly />
+            <div id="iframe-view" class="iframe-view">
+                <!-- 浏览器控制栏 -->
+                <header class="iframe-header">
+                    <div class="iframe-nav-controls">
+                        <!-- 地址栏 -->
+                        <div class="iframe-address-bar">
+                            <span class="iconify" data-icon="tabler:world" aria-hidden="true"></span>
+                            <input id="iframe-url-input" type="text" readonly />
+                        </div>
+                        <!-- 操作按钮 -->
+                        <button
+                            id="iframe-back-btn"
+                            class="icon-button iframe-control-btn"
+                            title="后退"
+                            aria-label="后退"
+                        >
+                            <span class="iconify" data-icon="tabler:arrow-left"></span>
+                        </button>
+                        <button
+                            id="iframe-forward-btn"
+                            class="icon-button iframe-control-btn"
+                            title="前进"
+                            aria-label="前进"
+                        >
+                            <span class="iconify" data-icon="tabler:arrow-right"></span>
+                        </button>
+                        <button
+                            id="iframe-home-btn"
+                            class="icon-button iframe-control-btn"
+                            title="返回主页"
+                            aria-label="返回主页"
+                        >
+                            <span class="iconify" data-icon="tabler:home"></span>
+                        </button>
+                        <button
+                            id="iframe-refresh-btn"
+                            class="icon-button iframe-control-btn"
+                            title="刷新"
+                            aria-label="刷新"
+                        >
+                            <span class="iconify" data-icon="tabler:refresh"></span>
+                        </button>
+                        <!-- 关闭按钮 -->
+                        <button
+                            id="iframe-close-btn"
+                            class="icon-button iframe-control-btn"
+                            title="关闭"
+                            aria-label="关闭"
+                        >
+                            <span class="iconify" data-icon="tabler:x"></span>
+                        </button>
                     </div>
-                    <!-- 操作按钮 -->
-                    <button id="iframe-back-btn" class="icon-button iframe-control-btn" title="后退" aria-label="后退">
-                        <span class="iconify" data-icon="tabler:arrow-left"></span>
-                    </button>
-                    <button
-                        id="iframe-forward-btn"
-                        class="icon-button iframe-control-btn"
-                        title="前进"
-                        aria-label="前进"
-                    >
-                        <span class="iconify" data-icon="tabler:arrow-right"></span>
-                    </button>
-                    <button
-                        id="iframe-home-btn"
-                        class="icon-button iframe-control-btn"
-                        title="返回主页"
-                        aria-label="返回主页"
-                    >
-                        <span class="iconify" data-icon="tabler:home"></span>
-                    </button>
-                    <button
-                        id="iframe-refresh-btn"
-                        class="icon-button iframe-control-btn"
-                        title="刷新"
-                        aria-label="刷新"
-                    >
-                        <span class="iconify" data-icon="tabler:refresh"></span>
-                    </button>
-                    <!-- 关闭按钮 -->
-                    <button id="iframe-close-btn" class="icon-button iframe-control-btn" title="关闭" aria-label="关闭">
-                        <span class="iconify" data-icon="tabler:x"></span>
-                    </button>
+                </header>
+
+                <!-- 内容区域 -->
+                <main class="iframe-main">
+                    <iframe
+                        id="content-iframe"
+                        title="网站内容"
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                    ></iframe>
+                </main>
+
+                <!-- 加载指示器 -->
+                <div class="iframe-loading-overlay hidden">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载...</p>
                 </div>
-            </header>
-
-            <!-- 内容区域 -->
-            <main class="iframe-main">
-                <iframe
-                    id="content-iframe"
-                    title="网站内容"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                ></iframe>
-            </main>
-
-            <!-- 加载指示器 -->
-            <div class="iframe-loading-overlay hidden">
-                <div class="loading-spinner"></div>
-                <p>正在加载...</p>
             </div>
-        </div>
+        </main>
+
         <footer id="site-footer">
             <!-- 内容将由 script.js 根据 data.js 的配置动态生成 -->
         </footer>
