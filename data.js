@@ -93,28 +93,33 @@ window.siteConfig = {
 
 window.navData = [
     {
-        category: "常用工具",
-        items: [
-            { name: "GitHub", url: "https://github.com", description: "全球最大的代码托管平台", icon: "mingcute:github-line" },
-            { name: "Google", url: "https://www.google.com", description: "全球最大的搜索引擎", icon: "simple-icons:google" },
-            { name: "ChatGPT", url: "https://chat.openai.com", description: "OpenAI 出品的大语言模型", icon: "simple-icons:openai" },
-            { name: "Stack Overflow", url: "https://stackoverflow.com", description: "程序员的问答社区" } // 使用默认图标
-        ]
-    },
-    {
-        category: "开发学习",
-        items: [
-            { name: "MDN Web Docs", url: "https://developer.mozilla.org/zh-CN/", description: "Web 开发者的必读文档", icon: "simple-icons:mdnwebdocs" },
-            { name: "Vue.js", url: "https://cn.vuejs.org/", description: "渐进式 JavaScript 框架", icon: "simple-icons:vuedotjs" },
-            { name: "React", url: "https://react.dev/", description: "用于构建用户界面的 JS 库", icon: "simple-icons:react" },
-        ]
-    },
-    {
-        category: "休闲娱乐",
-        items: [
-            { name: "YouTube", url: "https://www.youtube.com", description: "全球最大的视频分享网站", icon: "simple-icons:youtube" },
-            { name: "Bilibili", url: "https://www.bilibili.com", description: "国内知名的视频弹幕网站", icon: "simple-icons:bilibili" },
-            { name: "IMDb", url: "https://www.imdb.com", description: "互联网电影资料库", icon: "simple-icons:imdb" },
-        ]
+        category: "终末地",
+        items: [{ name: "电量分流计算器", url: "/endfield-calculator/", description: "" }]
+           
     }
+    // {
+    //     category: "常用工具",
+    //     items: [{ name: "终末地电量分流计算器", url: "https://github.com", description: "全球最大的代码托管平台", icon: "mingcute:github-line" }
+    //         // { name: "GitHub", url: "https://github.com", description: "全球最大的代码托管平台", icon: "mingcute:github-line" },
+    //         // { name: "Google", url: "https://www.google.com", description: "全球最大的搜索引擎", icon: "simple-icons:google" },
+    //         // { name: "ChatGPT", url: "https://chat.openai.com", description: "OpenAI 出品的大语言模型", icon: "simple-icons:openai" },
+    //         // { name: "Stack Overflow", url: "https://stackoverflow.com", description: "程序员的问答社区" } // 使用默认图标
+    //     ]
+    // },
+    // {
+    //     category: "开发学习",
+    //     items: [
+    //         { name: "MDN Web Docs", url: "https://developer.mozilla.org/zh-CN/", description: "Web 开发者的必读文档", icon: "simple-icons:mdnwebdocs" },
+    //         { name: "Vue.js", url: "https://cn.vuejs.org/", description: "渐进式 JavaScript 框架", icon: "simple-icons:vuedotjs" },
+    //         { name: "React", url: "https://react.dev/", description: "用于构建用户界面的 JS 库", icon: "simple-icons:react" },
+    //     ]
+    // },
+    // {
+    //     category: "休闲娱乐",
+    //     items: [
+    //         { name: "YouTube", url: "https://www.youtube.com", description: "全球最大的视频分享网站", icon: "simple-icons:youtube" },
+    //         { name: "Bilibili", url: "https://www.bilibili.com", description: "国内知名的视频弹幕网站", icon: "simple-icons:bilibili" },
+    //         { name: "IMDb", url: "https://www.imdb.com", description: "互联网电影资料库", icon: "simple-icons:imdb" },
+    //     ]
+    // }
 ];
