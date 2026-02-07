@@ -4,12 +4,6 @@
 // 1. 工具函数
 // =========================================================================
 
-/**
- * 防抖函数：在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时。
- * @param {Function} func - 需要防抖的函数。
- * @param {number} delay - 延迟时间（毫秒）。
- * @returns {Function} - 防抖处理后的函数。
- */
 function debounce(func, delay) {
     let timeoutId
     return function (...args) {
@@ -24,7 +18,6 @@ function debounce(func, delay) {
 // 2. 应用状态与元素获取
 // =========================================================================
 
-// --- 应用状态 ---
 const state = {
     currentBgType: window.siteConfig.background.defaultType,
     currentTheme: 'dark',
@@ -32,9 +25,6 @@ const state = {
     bgIntervalId: null
 }
 
-// --- 元素获取函数 ---
-
-// --- 全局 elements 对象 ---
 let elements = {
     header: document.getElementById('main-header'),
     content: document.getElementById('content-item'),
@@ -46,17 +36,15 @@ let elements = {
     siteFooter: document.getElementById('site-footer'),
     githubLink: document.getElementById('github-link'),
     body: document.body,
-    root: document.documentElement
+    root: document.documentElement,
+    // [增强] 获取 Favicon link 元素
+    favicon: document.getElementById('site-favicon')
 }
 
 // =========================================================================
 // 3. 核心渲染功能
 // =========================================================================
 
-/**
- * 渲染导航卡片到DOM
- * @param {Array} data - 要渲染的导航数据
- */
 function renderCards(data) {
     const { content } = elements
 
@@ -65,7 +53,7 @@ function renderCards(data) {
         return
     }
 
-    content.innerHTML = '' // 清空现有内容
+    content.innerHTML = ''
 
     for (const category of data) {
         const categorySection = document.createElement('section')
@@ -80,22 +68,14 @@ function renderCards(data) {
         cardGrid.classList.add('nav-cards')
 
         for (const item of category.items) {
-            // --- 核心优化：使用 <a> 标签作为卡片容器 ---
             const card = document.createElement('a')
-            card.href = item.url // 必须设置有效的 href
-
-            // 使用自定义数据属性存储目标类型
-            // 这比 JS 逻辑判断更优雅，实现了数据和行为的分离
+            card.href = item.url
             card.dataset.target = item.target || '_blank'
-
-            // 应用卡片样式
             card.classList.add('nav-card')
 
             if (card.dataset.target === '_blank') {
-                // 设置链接的打开方式，确保默认行为是安全的
                 card.target = '_blank'
             }
-
             card.rel = 'noopener noreferrer'
 
             const icon = item.icon || window.siteConfig.defaultIcon
@@ -200,9 +180,7 @@ function updateClock() {
 
 // --- 动态布局功能 ---
 function setMainPadding() {
-    // --- 新增：守卫条件 ---
-
-    // --- 新增结束 ---
+    // [已清理] 移除了无效的注释代码。
 
     const header = document.getElementById('main-header')
     const footer = document.getElementById('site-footer')
@@ -240,6 +218,7 @@ function init() {
         document.title = title
         elements.siteTitle.textContent = title
         elements.siteSubtitle.textContent = subtitle
+
         if (elements.githubLink && githubRepoUrl && !githubRepoUrl.includes('YOUR_USERNAME')) {
             elements.githubLink.href = githubRepoUrl
         } else {

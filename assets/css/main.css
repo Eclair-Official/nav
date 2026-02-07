@@ -1,4 +1,3 @@
-
 /* ==========================================================================
    导航页面样式表 | Navigation Page Stylesheet
    ========================================================================== */
@@ -14,15 +13,14 @@
    例如：:root { --card-bg: rgba(...); --primary: #BB86FC; }
 */
 
-/* --- 通用可访问性焦点样式 (Global Accessible Focus Style) --- */
-/* 为所有可通过键盘聚焦的元素提供统一、清晰的焦点指示器 */
+/* --- 通用可访问性焦点样式 --- */
 .icon-button:focus-visible,
 #github-link:focus-visible,
 #search-input:focus-visible,
 .nav-card:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 3px;
-    border-radius: 4px; /* 使轮廓角落与元素匹配 */
+    border-radius: 4px;
 }
 
 body {
@@ -49,31 +47,28 @@ header {
     width: 100%;
     text-align: center;
     padding: 0.8rem 1rem;
-    min-height: 50px; /* 增加最小高度以适应内容 */
+    min-height: 50px;
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.05);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
     z-index: 10;
-
-    /* --- 改进：使用 Flexbox 优化内部布局 --- */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* 顶部控件和标题区域上下分布 */
+    justify-content: space-between;
 }
 
 /* --- 顶部控制区域容器 --- */
 .header-top-controls {
-
-   position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%;  
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:  1rem  3rem; /* 内部 padding，与 header 的 padding 呼应 */
+    padding: 1rem 3rem;
     box-sizing: border-box;
 }
 
@@ -86,23 +81,21 @@ header {
     margin-top: 0.5rem;
     color: var(--title-color);
     text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-    /* margin-top: 0.5rem; 不再需要，flexbox 会处理对齐 */
 }
 
 /* --- 主体内容 --- */
 main#content {
-    flex-grow: 1; /* 允许 main 填充剩余空间，配合 body 的 flex 布局 */
+    flex-grow: 1;
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
-    /* Padding-top 由 script.js 动态设置 */
 }
 
 /* --- 底部 --- */
 footer {
     width: 100%;
-    padding: 0.1rem 0.5rem; /* 增加垂直 padding */
+    padding: 0.1rem 0.5rem;
     font-size: 0.9rem;
     color: var(--text-secondary);
     text-align: center;
@@ -110,7 +103,7 @@ footer {
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     border-top: 1px solid var(--border);
-    flex-shrink: 0; /* 防止 Footer 在空间不足时被压缩 */
+    flex-shrink: 0;
 }
 
 /* ==========================================================================
@@ -120,7 +113,7 @@ footer {
 /* --- 控制按钮与 GitHub 链接 --- */
 .controls {
     display: flex;
-    gap: 0.5rem;    
+    gap: 0.5rem;
 }
 
 .icon-button,
@@ -200,7 +193,8 @@ footer {
 
 /* --- 搜索框 --- */
 .content-search-wrapper {
-    width: 100%;
+    width: calc(100% - 4rem); /* 保持与 nav-category 一致的 margin */
+    margin-left: 2rem;
     display: flex;
     justify-content: center;
     margin-top: 2.5rem;
@@ -215,7 +209,7 @@ footer {
     border-radius: 12px;
     color: var(--text-primary);
     text-align: center;
-    outline: none; /* 移除默认轮廓，使用自定义焦点样式 */
+    outline: none;
     transition: all 0.3s ease;
     background-color: var(--card-bg);
     -webkit-backdrop-filter: blur(12px);
@@ -226,7 +220,7 @@ footer {
 
 #search-input:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 187, 134, 252), 0.4), 0 8px 32px var(--shadow); /* 假设主题色有对应的rgb值，或直接使用主题色 */
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 187, 134, 252), 0.4), 0 8px 32px var(--shadow);
     transform: scale(1.02);
 }
 
@@ -234,7 +228,7 @@ footer {
 .nav-category {
     margin-bottom: 2.5rem;
     margin-left: 2rem;
-    width: calc(100% - 4rem); /* 减去左右 margin */
+    width: calc(100% - 4rem);
 }
 
 .category-title {
@@ -267,8 +261,7 @@ footer {
     backdrop-filter: blur(12px);
     border: 1px solid var(--border);
     box-shadow: 0 8px 32px var(--shadow);
-    cursor: pointer; /* 保持指针样式 */
-    /* --- 改进：性能优化提示 --- */
+    cursor: pointer;
     will-change: transform, box-shadow;
 }
 
@@ -284,12 +277,7 @@ footer {
     transition: transform 0.3s ease;
 }
 
-/* Iconify 加载失败时的备用方案 */
-.iconify:not(.iconified):not([loaded="true"]) + [data-fallback]::before {
-    content: attr(data-fallback);
-    font-size: 0.8em;
-    color: var(--text-secondary);
-}
+/* [已清理] 移除了无效的 Iconify 后备样式规则。*/
 
 .nav-card:hover .iconify {
     transform: rotate(15deg) scale(1.1);
@@ -319,44 +307,36 @@ footer {
    4. 响应式设计
    ========================================================================== */
 @media (max-width: 768px) {
-
- /* --- 1. 修复 Header 布局 --- */
- 
-    /* 顶部控件区域不再需要绝对定位 */
+    /* --- 1. 修复 Header 布局 --- */
     .header-top-controls {
-        position: absolute;
-       /* 覆盖掉 absolute */
-        padding:  0.5rem  3rem;       /* 移除原有的 padding */
-        flex-shrink: 0;   /* 防止控件被压缩 */
-       /* 与右侧边距保持距离 */
+        /* 移动端保持绝对定位 */
+        padding: 0.5rem 3rem;
+        flex-shrink: 0;
     }
 
-    /* 标题区域占据剩余空间 */
     .site-header-inline {
         display: inline;
-        flex-grow: 1;     /* 允许标题区域占据剩余空间 */
-        text-align: left; /* 文字居中 */
-        margin-top: 0;    /* 移除上边距 */
-        margin-left: 1rem; /* 与左侧控件保持距离 */
+        flex-grow: 1;
+        text-align: left;
+        margin-top: 0;
+        margin-left: 1rem;
     }
 
     #site-subtitle::before {
         display: none;
     }
 
-    /* --- 2. 调整字体大小以适应窄屏 --- */
+    /* --- 2. 调整字体大小 --- */
     #site-title {
         font-size: 1.8rem;
     }
     #site-subtitle {
         display: none;
     }
-    
 
-
-    /* --- 3. 【核心修改】隐藏时钟组件 --- */
+    /* --- 3. 隐藏时钟组件 --- */
     #clock-widget {
-     opacity: 0;/* 在移动端隐藏时钟，为标题和控件腾出空间 */
+        opacity: 0;
     }
 
     /* --- 4. 调整控件大小 --- */
@@ -372,15 +352,10 @@ footer {
         gap: 1rem;
     }
     
+    /* [已清理] 修复并统一了 content-search-wrapper 的 margin 和 width */
     .content-search-wrapper {
         margin-top: 1rem;
         margin-bottom: 1rem;
-        margin-left: 2rem;
-        width: calc(100% - 4rem); /* 减去左右 margin */
-      
-     
-      
+        width: calc(100% - 4rem);
     }
 }
-
-

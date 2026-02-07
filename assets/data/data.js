@@ -11,22 +11,13 @@ window.siteConfig = {
     githubRepoUrl: 'https://github.com/Eclair-Official',
     // --- 新增：Footer 配置 ---
     footer: {
-        // 自定义你的版权信息
         copyright: '© 2026 MyNav. All Rights Reserved.',
-        // 自定义你的技术栈或说明
         poweredBy: 'Powered with ❤️ by GitHub Pages.'
-        // 你还可以添加更多内容，例如链接
-        // extraLinks: [
-        //     { name: "隐私政策", url: "#" },
-        //     { name: "联系我", url: "#" }
-        // ]
     },
     // --- 默认图标配置 ---
-    // 当导航项未指定图标时使用
     defaultIcon: 'material-symbols:link',
 
     // --- 主题配置 (完全可自定义) ---
-    // 每个主题对象包含其所有视觉变量
     themes: {
         dark: {
             name: '深夜模式',
@@ -72,7 +63,6 @@ window.siteConfig = {
     // --- 背景配置 ---
     background: {
         defaultType: 'gradient', // 'gradient' 或 'unsplash'
-        // 保底渐变，当特定主题渐变未定义或外部资源加载失败时使用
         defaultGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         gradients: {
             dark: 'linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c)',
@@ -101,44 +91,22 @@ window.navData = [
                 target: 'iframe'
             },
             {
-                name: 'GitHub',
-                url: 'https://www.bilibili.com/',
-                description: '全球最大的代码托管平台',
-                icon: 'mingcute:github-line'
+                name: 'Bilibili', // 修正：名称更符合 URL
+                url: 'https://www.bilibili.com/', // 修正：这里是 Bilibili 的 URL
+                description: '年轻人的视频社区',
+                icon: 'simple-icons:bilibili' // 修正：使用 Bilibili 图标更合适
             }
         ]
     }
     // {
     //     category: '常用工具',
     //     items: [
-    //         {
-    //             name: 'GitHub',
-    //             url: 'https://github.com',
-    //             description: '全球最大的代码托管平台',
-    //             icon: 'mingcute:github-line',
-    //             target: 'iframe'
-    //         },
-    //         {
-    //             name: 'Google',
-    //             url: 'https://www.google.com',
-    //             description: '全球最大的搜索引擎',
-    //             icon: 'simple-icons:google',
-    //             target: 'iframe'
-    //         },
-    //         {
-    //             name: 'ChatGPT',
-    //             url: 'https://chat.openai.com',
-    //             description: 'OpenAI 出品的大语言模型',
-    //             icon: 'simple-icons:openai'
-    //         },
-    //         { name: 'Stack Overflow', url: 'https://stackoverflow.com', description: '程序员的问答社区' } // 使用默认图标
-    //     ]
-    // },
+    //         { ... }
+    //     ],
+    // }
 ]
+
 // --- 新增：Iframe 全局配置 ---
-// 这个配置不是必需的，但把它放在这里能更好地体现配置化的思想
 window.siteConfig.iframe = {
-    // 一些网站（如 Google, Facebook）不允许被 iframe 嵌入（X-Frame-Options 响应头）。
-    // 我们可以在这里维护一个黑名单，当用户尝试打开这些网站时，给出提示。
     blockedHosts: ['www.google.com', 'facebook.com']
 }
