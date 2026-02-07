@@ -88,13 +88,7 @@ window.navData = [
                 name: '电量分流计算器',
                 url: 'pages/endfield-calculator/',
                 description: '电量分流计算器',
-                target: 'iframe'
-            },
-            {
-                name: 'Bilibili', // 修正：名称更符合 URL
-                url: 'https://www.bilibili.com/', // 修正：这里是 Bilibili 的 URL
-                description: '年轻人的视频社区',
-                icon: 'simple-icons:bilibili' // 修正：使用 Bilibili 图标更合适
+                target: 'local'
             }
         ]
     }
