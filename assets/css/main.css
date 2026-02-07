@@ -446,33 +446,9 @@ footer {
     width: 100%;
 }
 
-.iframe-address-bar {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    color: var(--text-secondary);
-    overflow: hidden;
-}
 
-.iframe-address-bar .iconify {
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
 
-#iframe-url-input {
-    flex-grow: 1;
-    background: none;
-    border: none;
-    outline: none; /* 移除默认轮廓 */
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.9rem;
-}
+
 
 .iframe-control-btn {
     background-color: var(--card-bg);

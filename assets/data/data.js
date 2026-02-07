@@ -96,9 +96,8 @@ window.navData = [
         items: [
             {
                 name: '电量分流计算器',
-                url: 'https://eclair-official.github.io/endfield-calculator/',
+                url: 'pages/endfield-calculator/',
                 description: '电量分流计算器',
-
                 target: 'iframe'
             }
         ]

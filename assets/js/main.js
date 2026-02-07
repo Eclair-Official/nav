@@ -50,7 +50,7 @@ let elements = {
     // --- Iframe 相关 ---
     iframeView: document.getElementById('iframe-view'),
     contentIframe: document.getElementById('content-iframe'),
-    iframeUrlInput: document.getElementById('iframe-url-input'),
+
     iframeCloseBtn: document.getElementById('iframe-close-btn'),
     iframeBackBtn: document.getElementById('iframe-back-btn'),
     iframeForwardBtn: document.getElementById('iframe-forward-btn'),
@@ -76,15 +76,8 @@ const IframeManager = {
     },
 
     open(url) {
-        const { hostname } = new URL(url)
-        if (window.siteConfig.iframe.blockedHosts.includes(hostname)) {
-            alert(`安全提示：网站 "${hostname}" 不允许在 iframe 中嵌入，将为您在新标签页打开。`)
-            window.open(url, '_blank')
-            return
-        }
-
         this.showLoading()
-        elements.iframeUrlInput.value = url
+
         elements.contentIframe.src = url
         // --- 修改开始 ---
         // 1. 防止底层页面滚动
@@ -122,8 +115,7 @@ const IframeManager = {
 
     handleLoad() {
         this.hideLoading()
-        this.updateAddressBar()
-        this.applyContentFullscreenStyles()
+        // this.applyContentFullscreenStyles()
     },
 
     handleKeydown(e) {
@@ -133,16 +125,6 @@ const IframeManager = {
             this.close()
         }
     },
-
-    // --- 内容优化 ---
-    updateAddressBar() {
-        try {
-            elements.iframeUrlInput.value = elements.contentIframe.contentWindow.location.href
-        } catch (e) {
-            // 跨域时，保持显示初始URL
-        }
-    },
-
     applyContentFullscreenStyles() {
         const header = document.getElementById('iframe-header')
 
