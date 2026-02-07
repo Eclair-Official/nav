@@ -43,17 +43,21 @@
         </header>
 
         <main id="content" role="main" aria-label="导航链接区域">
-            <div class="content-search-wrapper">
-                <input
-                    type="search"
-                    id="search-input"
-                    placeholder="搜索网站..."
-                    autocomplete="off"
-                    aria-label="搜索网站"
-                />
-            </div>
-            <div id="content-item" class="nav-grid"></div>
-            <div id="iframe-view" class="iframe-view">
+            <!-- 视图1: 导航主页 -->
+            <section id="home-view" class="view">
+                <div class="content-search-wrapper">
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="搜索网站..."
+                        autocomplete="off"
+                        aria-label="搜索网站"
+                    />
+                </div>
+                <div id="content-item" class="nav-grid"></div>
+            </section>
+
+            <section id="iframe-view" class="iframe-view">
                 <!-- 浏览器控制栏 -->
                 <header id="iframe-header" class="iframe-header">
                     <div class="iframe-nav-controls">
@@ -93,7 +97,6 @@
                         </button>
                     </div>
                 </header>
-
                 <!-- 内容区域 -->
                 <main id="iframe-main" class="iframe-main">
                     <iframe
@@ -108,7 +111,7 @@
                     <div class="loading-spinner"></div>
                     <p>正在加载...</p>
                 </div>
-            </div>
+            </section>
         </main>
 
         <footer id="site-footer">
