@@ -11,7 +11,7 @@ window.siteConfig = {
     githubRepoUrl: 'https://github.com/Eclair-Official',
     // --- 新增：Footer 配置 ---
     footer: {
-        copyright: '© 2026 MyNav. All Rights Reserved.',
+        copyright: '© 2026 Eclair Nav. All Rights Reserved.',
         poweredBy: 'Powered with ❤️ by GitHub Pages.'
     },
     // --- 默认图标配置 ---
