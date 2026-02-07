@@ -46,107 +46,7 @@ let elements = {
     siteFooter: document.getElementById('site-footer'),
     githubLink: document.getElementById('github-link'),
     body: document.body,
-    root: document.documentElement,
-    // --- Iframe 相关 ---
-    iframeView: document.getElementById('iframe-view'),
-    contentIframe: document.getElementById('content-iframe'),
-
-    iframeCloseBtn: document.getElementById('iframe-close-btn'),
-    iframeBackBtn: document.getElementById('iframe-back-btn'),
-    iframeForwardBtn: document.getElementById('iframe-forward-btn'),
-    iframeRefreshBtn: document.getElementById('iframe-refresh-btn'),
-    iframeLoadingOverlay: document.querySelector('.iframe-loading-overlay')
-}
-
-// =========================================================================
-// 3.5. Iframe 管理器
-// =========================================================================
-const IframeManager = {
-    init() {
-        // 绑定控制栏事件
-        elements.iframeCloseBtn.addEventListener('click', () => this.close())
-        elements.iframeRefreshBtn.addEventListener('click', () => this.refresh())
-        elements.iframeBackBtn.addEventListener('click', () => this.back())
-        elements.iframeForwardBtn.addEventListener('click', () => this.forward())
-
-        // 监听 iframe 加载和滚动
-        elements.contentIframe.addEventListener('load', () => this.handleLoad())
-
-        document.addEventListener('keydown', (e) => this.handleKeydown(e))
-    },
-
-    open(url) {
-        this.showLoading()
-
-        elements.contentIframe.src = url
-        // --- 修改开始 ---
-        // 1. 防止底层页面滚动
-        elements.body.style.overflow = 'hidden'
-        // 2. 暂停 setMainPadding 的影响，让弹层布局完全独立
-        elements.body.classList.add('iframe-view-is-active')
-        // --- 修改结束 ---
-
-        elements.iframeView.classList.add('active')
-    },
-
-    close() {
-        elements.iframeView.classList.remove('active')
-        elements.contentIframe.src = 'about:blank'
-        // --- 修改开始 ---
-        // 1. 恢复底层页面滚动
-        elements.body.style.overflow = ''
-        // 2. 恢复 setMainPadding 的正常工作
-        elements.body.classList.remove('iframe-view-is-active')
-        // --- 修改结束 ---
-    },
-
-    refresh() {
-        this.showLoading()
-        elements.contentIframe.src = elements.contentIframe.src
-    },
-
-    back() {
-        elements.contentIframe.contentWindow.history.back()
-    },
-
-    forward() {
-        elements.contentIframe.contentWindow.history.forward()
-    },
-
-    handleLoad() {
-        this.hideLoading()
-        // this.applyContentFullscreenStyles()
-    },
-
-    handleKeydown(e) {
-        if (!elements.iframeView.classList.contains('active')) return
-
-        if (e.key === 'Escape') {
-            this.close()
-        }
-    },
-    applyContentFullscreenStyles() {
-        const header = document.getElementById('iframe-header')
-
-        const main = document.getElementById('iframe-main')
-
-        if (!header || !main) {
-            console.warn('Layout elements not found, cannot set dynamic padding.')
-            return
-        }
-
-        const headerHeight = header.offsetHeight
-        main.style.paddingTop = `${headerHeight}px`
-    },
-
-    // --- UI 状态 ---
-    showLoading() {
-        elements.iframeLoadingOverlay.classList.remove('hidden')
-    },
-
-    hideLoading() {
-        elements.iframeLoadingOverlay.classList.add('hidden')
-    }
+    root: document.documentElement
 }
 
 // =========================================================================
@@ -180,26 +80,30 @@ function renderCards(data) {
         cardGrid.classList.add('nav-cards')
 
         for (const item of category.items) {
-            // 改为 <div>，因为我们要自己处理点击
-            const card = document.createElement('div')
+            // --- 核心优化：使用 <a> 标签作为卡片容器 ---
+            const card = document.createElement('a')
+            card.href = item.url // 必须设置有效的 href
+
+            // 使用自定义数据属性存储目标类型
+            // 这比 JS 逻辑判断更优雅，实现了数据和行为的分离
+            card.dataset.target = item.target || '_blank'
+
+            // 应用卡片样式
             card.classList.add('nav-card')
-            card.style.cursor = 'pointer'
+
+            if (card.dataset.target === '_blank') {
+                // 设置链接的打开方式，确保默认行为是安全的
+                card.target = '_blank'
+            }
+
+            card.rel = 'noopener noreferrer'
 
             const icon = item.icon || window.siteConfig.defaultIcon
             card.innerHTML = `
-              <span class="iconify" data-icon="${icon}" data-fallback="${item.name.charAt(0)}"></span>
+                <span class="iconify" data-icon="${icon}" data-fallback="${item.name.charAt(0)}"></span>
                 <div class="card-title">${item.name}</div>
                 <div class="card-description">${item.description}</div>
             `
-
-            // 添加点击事件监听器
-            card.addEventListener('click', () => {
-                if (item.target === 'iframe') {
-                    IframeManager.open(item.url)
-                } else {
-                    window.open(item.url, '_blank', 'noopener,noreferrer')
-                }
-            })
 
             cardGrid.appendChild(card)
         }
@@ -297,10 +201,7 @@ function updateClock() {
 // --- 动态布局功能 ---
 function setMainPadding() {
     // --- 新增：守卫条件 ---
-    // 如果 body 有 'iframe-view-is-active' 类，说明 iframe 弹层已打开，此时直接返回，不做任何布局计算。
-    if (document.body.classList.contains('iframe-view-is-active')) {
-        return
-    }
+
     // --- 新增结束 ---
 
     const header = document.getElementById('main-header')
@@ -366,9 +267,6 @@ function init() {
     updateClock()
     setInterval(updateClock, 1000)
     renderCards(window.navData)
-
-    // 初始化 Iframe Manager
-    IframeManager.init()
 
     setTimeout(setMainPadding, 0)
 }

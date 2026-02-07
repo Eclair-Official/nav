@@ -43,75 +43,16 @@
         </header>
 
         <main id="content" role="main" aria-label="导航链接区域">
-            <!-- 视图1: 导航主页 -->
-            <section id="home-view" class="view">
-                <div class="content-search-wrapper">
-                    <input
-                        type="search"
-                        id="search-input"
-                        placeholder="搜索网站..."
-                        autocomplete="off"
-                        aria-label="搜索网站"
-                    />
-                </div>
-                <div id="content-item" class="nav-grid"></div>
-            </section>
-
-            <section id="iframe-view" class="iframe-view">
-                <!-- 浏览器控制栏 -->
-                <header id="iframe-header" class="iframe-header">
-                    <div class="iframe-nav-controls">
-                        <!-- 操作按钮 -->
-                        <button
-                            id="iframe-back-btn"
-                            class="icon-button iframe-control-btn"
-                            title="后退"
-                            aria-label="后退"
-                        >
-                            <span class="iconify" data-icon="tabler:arrow-left"></span>
-                        </button>
-                        <button
-                            id="iframe-forward-btn"
-                            class="icon-button iframe-control-btn"
-                            title="前进"
-                            aria-label="前进"
-                        >
-                            <span class="iconify" data-icon="tabler:arrow-right"></span>
-                        </button>
-                        <button
-                            id="iframe-refresh-btn"
-                            class="icon-button iframe-control-btn"
-                            title="刷新"
-                            aria-label="刷新"
-                        >
-                            <span class="iconify" data-icon="tabler:refresh"></span>
-                        </button>
-                        <!-- 关闭按钮 -->
-                        <button
-                            id="iframe-close-btn"
-                            class="icon-button iframe-control-btn"
-                            title="关闭"
-                            aria-label="关闭"
-                        >
-                            <span class="iconify" data-icon="tabler:x"></span>
-                        </button>
-                    </div>
-                </header>
-                <!-- 内容区域 -->
-                <main id="iframe-main" class="iframe-main">
-                    <iframe
-                        id="content-iframe"
-                        title="网站内容"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                    ></iframe>
-                </main>
-
-                <!-- 加载指示器 -->
-                <div class="iframe-loading-overlay hidden">
-                    <div class="loading-spinner"></div>
-                    <p>正在加载...</p>
-                </div>
-            </section>
+            <div class="content-search-wrapper">
+                <input
+                    type="search"
+                    id="search-input"
+                    placeholder="搜索网站..."
+                    autocomplete="off"
+                    aria-label="搜索网站"
+                />
+            </div>
+            <div id="content-item" class="nav-grid"></div>
         </main>
 
         <footer id="site-footer">

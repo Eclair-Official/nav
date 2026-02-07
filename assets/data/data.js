@@ -99,6 +99,12 @@ window.navData = [
                 url: 'pages/endfield-calculator/',
                 description: '电量分流计算器',
                 target: 'iframe'
+            },
+            {
+                name: 'GitHub',
+                url: 'https://www.bilibili.com/',
+                description: '全球最大的代码托管平台',
+                icon: 'mingcute:github-line'
             }
         ]
     }
@@ -116,7 +122,8 @@ window.navData = [
     //             name: 'Google',
     //             url: 'https://www.google.com',
     //             description: '全球最大的搜索引擎',
-    //             icon: 'simple-icons:google'
+    //             icon: 'simple-icons:google',
+    //             target: 'iframe'
     //         },
     //         {
     //             name: 'ChatGPT',
