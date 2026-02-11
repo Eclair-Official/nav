@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
     <head>
         <meta charset="UTF-8" />
@@ -564,7 +564,14 @@
                 // displaybestResults()
             }
             function displayResultsParam(solutions) {
-                solutions.sort((a, b) => {
+                // 1. 过滤：移除 actualTime <= 40 的解
+                const validSolutions = solutions.filter((solution) => {
+                    const actualTime = solution[9]?.optimal.totalTime
+                    // 如果 actualTime 存在且大于 40，则保留这个解
+                    return actualTime > 40
+                })
+
+                validSolutions.sort((a, b) => {
                     // 获取a、b子数组中第8项的totaltime（注意：数组索引从0开始）
                     const actualTimeA = a[9]?.optimal.totalTime || 0 // 加?.避免undefined报错，兜底为0
                     const maxChargeA = a[10] || 0
@@ -580,11 +587,11 @@
                     return WasteA - WasteB // 升序：小的在前；若要降序，改为 timeB - timeA
                 })
 
-                solutions.forEach((item) => {
+                validSolutions.forEach((item) => {
                     displayResults(...item)
                 })
-                displayResultsHref(solutions)
-                displaybestResults(...solutions[0])
+                displayResultsHref(validSolutions)
+                displaybestResults(...validSolutions[0])
             }
             // 计算40秒内充满的电量
             function charge(batteryName, batteryValue, dischargeRate, x, y) {
@@ -1036,7 +1043,7 @@
                                                         <div class="stat-label">实际效率</div>
                                                         <div class="stat-value" style="color: ${
                                                             actualTime < targetEfficiency ? '#39c5bb' : '#e53935'
-                                                        }">${actualTime.toFixed(4)} 秒/个</div>
+                                                        }">${actualTime.toFixed(2)} 秒/个</div>
                                                     </div>
                                                     <div class="stat-card">
                                                         <div class="stat-label">效率比例</div>
@@ -1049,11 +1056,11 @@
                                                         <div class="stat-value">${actualRate.toFixed(6)} 个/秒</div>
                                                     </div>
                                                     <div class="stat-card">
-                                                        <div class="stat-label">每秒浪费电量</div>
+                                                        <div class="stat-label">浪费电量</div>
                                                         <div class="stat-value">${(
                                                             maxCharge / actualTime -
                                                             dischargeRate
-                                                        ).toFixed(6)} /秒</div>
+                                                        ).toFixed(2)} /秒</div>
                                                     </div>
                                                     <div class="stat-card" style="border-left-color: #4caf50;">
                                                         <div class="stat-label">每天节省电池</div>
@@ -1110,13 +1117,6 @@
 
                 // 检查实际效率是否小于等于40秒
                 if (actualTime <= 40) {
-                    alert(
-                        '计算出的实际效率不能小于等于40秒！\n当前实际效率为 ' +
-                            actualTime.toFixed(2) +
-                            ' 秒/个\n目标效率为 ' +
-                            targetEfficiency.toFixed(2) +
-                            ' 秒/个\n\n这意味着分流方案过于激进，导致生产周期比充电周期还短。\n请调整输入参数（增大电池供电量或调整其他参数）。'
-                    )
                     return
                 }
 
@@ -1189,7 +1189,7 @@
                                                         <div class="stat-label">实际效率</div>
                                                         <div class="stat-value" style="color: ${
                                                             actualTime < targetEfficiency ? '#39c5bb' : '#e53935'
-                                                        }">${actualTime.toFixed(4)} 秒/个</div>
+                                                        }">${actualTime.toFixed(2)} 秒/个</div>
                                                     </div>
                                                     <div class="stat-card">
                                                         <div class="stat-label">效率比例</div>
@@ -1202,11 +1202,11 @@
                                                         <div class="stat-value">${actualRate.toFixed(6)} 个/秒</div>
                                                     </div>
                                                     <div class="stat-card">
-                                                        <div class="stat-label">每秒浪费电量</div>
+                                                        <div class="stat-label">浪费电量</div>
                                                         <div class="stat-value">${(
                                                             maxCharge / actualTime -
                                                             dischargeRate
-                                                        ).toFixed(6)} /秒</div>
+                                                        ).toFixed(2)} /秒</div>
                                                     </div>
                                                     <div class="stat-card" style="border-left-color: #4caf50;">
                                                         <div class="stat-label">每天节省电池</div>
@@ -1262,7 +1262,7 @@
                         splitsText = '<span class="split-badge">无分流</span>'
                     }
 
-                    const timeDisplay = pipeline.time ? `${pipeline.time.toFixed(4)}秒/个` : '2秒/个'
+                    const timeDisplay = pipeline.time ? `${pipeline.time.toFixed(0)}秒/个` : '2秒/个'
                     const efficiency = ((pipeline.time / targetEfficiency) * 100).toFixed(2)
                     const splitCount = pipeline.splits.length
 
@@ -1284,7 +1284,7 @@
                                                                     6
                                                                 )} 个/秒 |
                                                                 <strong>效率：</strong>${pipeline.time.toFixed(
-                                                                    4
+                                                                    0
                                                                 )} 秒/个 |
                                                                 <strong>效率比例：</strong><span style="color: ${
                                                                     parseFloat(efficiency) >= 70 ? '#4caf50' : '#e53935'
@@ -1299,7 +1299,7 @@
                                                                           }">${(
                                                                               maxCharge / actualTime -
                                                                               (x - y)
-                                                                          ).toFixed(6)} /秒</span>`
+                                                                          ).toFixed(2)} /秒</span>`
                                                                 }
                                                             </div>
                                                             <div class="pipeline-splits">
@@ -1323,7 +1323,8 @@
                 // 只有轻量化方案有效时才显示
                 if (
                     solutions.lightweight &&
-                    solutions.lightweight.pipeline && (solutions.optimal.totalTime !== solutions.lightweight.totalTime)
+                    solutions.lightweight.pipeline &&
+                    solutions.optimal.totalTime !== solutions.lightweight.totalTime
                 ) {
                     html += generatePipelineHTML(
                         solutions.lightweight.pipeline,
