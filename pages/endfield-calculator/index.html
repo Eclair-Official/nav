@@ -139,9 +139,9 @@
 
             .result-header h2 {
                 margin: 0;
-                color: #39c5bb;
+                color: #ff3d00;
                 font-weight: normal;
-                font-size: 1.1em;
+                font-size: 1.5em;
             }
 
             .result-stats {
@@ -800,7 +800,7 @@
                 }
             }
 
-            // 查找轻量化方案（优先减少分流数量，允许效率降低到70%）
+            // 查找轻量化方案（优先减少分流数量，允许效率降低到80%）
             function findLightweightSplitFromTime(targetTime) {
                 const baseTime = 2
 
@@ -902,7 +902,7 @@
                 const actualTime = baseTime * bestMultiplier
                 const actualRate = 1 / actualTime
 
-                // 如果轻量化方案效率太低（<70%）或找不到有效方案，返回null
+                // 如果轻量化方案效率太低（<80%）或找不到有效方案，返回null
                 const efficiencyRatio = bestMultiplier / targetMultiplier
                 if (bestMultiplier === 1 || efficiencyRatio < minEfficiencyRatio || actualTime <= 40) {
                     return null
@@ -921,21 +921,17 @@
             function displayResultsHref(solutions) {
                 const resultSection = document.getElementById('result')
 
-                let html = ` <div class="result-header"><h2>最优计算结果:`
+                let html = ` <div ><h2>最优计算结果:`
                 solutions.forEach((item, index) => {
                     if (index === 0) {
                         // 第一个按钮：内联样式实现 error 颜色效果 + span 加粗
-                        html += `<button class="btn-highlight"  onclick="location.href='#${item[0]}'"> 
-            <span style="font-weight: bold;">${item[1]}</span>
-        </button>`
+                        html += `<button class="btn-highlight"  onclick="location.href='#${item[0]}'"><span style="font-weight: bold;">${item[1]}</span></button>`
                     } else {
                         // 其余按钮：普通样式
-                        html += `<button  class="btn-normal" onclick="location.href='#${item[0]}'"> 
-            ${item[1]} 
-        </button>`
+                        html += `<button  class="btn-normal" onclick="location.href='#${item[0]}'">${item[1]}</button>`
                     }
                 })
-                html += `</div>`
+                html += `</h2></div>`
                 resultSection.innerHTML += html
             }
 
@@ -1144,7 +1140,7 @@
                 const moneySavedPerDay = batterySavedPerDay * priceInfo.value
 
                 results.innerHTML += ` <div class="result-header">
-                                <h2 id=${batteryId}>${batteryType}计算结果</h2>
+                                <h2 id=${batteryId}>${batteryType}</h2>
                             </div>
                             <div class="result-stats" id="stats">
                                                     <div class="stat-card">
@@ -1304,9 +1300,7 @@
                 }
 
                 // 生成方案HTML
-                let html = `<div class="result-header">
-                                    <h2>${batteryType}分流方案</h2>
-                                </div>`
+                let html = ``
                 html += generatePipelineHTML(
                     solutions.optimal.pipeline,
                     '最佳分流方案',
