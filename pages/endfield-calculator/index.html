@@ -692,7 +692,7 @@
 
             function findBestMultiplier(targetMultiplier) {
                 // 找到最接近 targetMultiplier 的 2^a × 3^b × (3/2)^c
-                // 策略：先只使用1/3和1/2，如果效率比例低于80%才使用2/3
+                // 策略：先只使用1/3和1/2，如果效率比例低于90%才使用2/3
 
                 const log2 = Math.log(2)
                 const log3 = Math.log(3)
@@ -745,7 +745,7 @@
                 const efficiencyRatio = bestMultiplier / targetMultiplier
 
                 // 如果效率比例低于90%，再使用2/3分流器进行优化
-                if (efficiencyRatio < 0.9) {
+                if (efficiencyRatio < 0.95) {
                     // 第二步：包含2/3分流器的完整搜索
                     for (let count3 = 0; count3 <= maxPower3; count3++) {
                         for (let count2 = 0; count2 <= maxPower; count2++) {
@@ -817,7 +817,7 @@
                 }
 
                 const targetMultiplier = targetTime / baseTime
-                const minEfficiencyRatio = 0.7 // 允许效率降低到70%
+                const minEfficiencyRatio = 0.8 // 允许效率降低到80%
                 const minMultiplier = targetMultiplier * minEfficiencyRatio
 
                 let bestSplitCount = Infinity
@@ -1284,23 +1284,17 @@
                                                                     6
                                                                 )} 个/秒 |
                                                                 <strong>效率：</strong>${pipeline.time.toFixed(
-                                                                    0
+                                                                    2
                                                                 )} 秒/个 |
                                                                 <strong>效率比例：</strong><span style="color: ${
-                                                                    parseFloat(efficiency) >= 70 ? '#4caf50' : '#e53935'
-                                                                }">${efficiency}%</span>
-                                                                ${
-                                                                    title === '轻量化方案'
-                                                                        ? ``
-                                                                        : `<strong>浪费电量：</strong><span style="color: ${
-                                                                              parseFloat(efficiency) >= 70
-                                                                                  ? '#4caf50'
-                                                                                  : '#e53935'
-                                                                          }">${(
-                                                                              maxCharge / actualTime -
-                                                                              (x - y)
-                                                                          ).toFixed(2)} /秒</span>`
-                                                                }
+                                                                    parseFloat(efficiency) >= 80 ? '#4caf50' : '#e53935'
+                                                                }">${efficiency}%</span>                                                               
+                                                                <strong>浪费电量：</strong><span style="color: ${
+                                                                    parseFloat(efficiency) >= 80 ? '#4caf50' : '#e53935'
+                                                                }">${(maxCharge / pipeline.time - (x - y)).toFixed(
+                                                                    2
+                                                                )} /秒</span>
+                                                                
                                                             </div>
                                                             <div class="pipeline-splits">
                                                                 <strong>分流数量：</strong>${splitCount} 个
@@ -1316,7 +1310,7 @@
                 html += generatePipelineHTML(
                     solutions.optimal.pipeline,
                     '最佳分流方案',
-                    '最接近目标效率，在效率相同时优先使用最少分流器',
+                    '最接近目标效率，在效率相同时优先使用最少分流器(当效率低于95%时允许适当增加2/3分流器数量以提高效率)',
                     '#39c5bb'
                 )
 
@@ -1329,7 +1323,7 @@
                     html += generatePipelineHTML(
                         solutions.lightweight.pipeline,
                         '轻量化方案',
-                        '减少分流器数量，允许适当损失效率（保持70%以上）',
+                        '减少分流器数量，允许适当损失效率（保持80%以上）',
                         '#ff9800'
                     )
                 }
