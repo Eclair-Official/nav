@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>商品价格展示 - 按星期和地区展示</title>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>商品价格展示</h1>
+                <p class="description">
+                    按星期和地区展示商品买入价格和推荐卖出价格。默认展示今日的价格信息。价格小于推荐买入价格就可以买入。
+                </p>
+            </header>
+
+            <div class="filter-area">
+                <div class="week-nav">
+                    <!-- 星期按钮将通过JavaScript动态生成 -->
+                </div>
+
+                <div class="region-nav">
+                    <!-- 地区按钮将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="date-header">
+                    <div class="current-date"></div>
+                    <div class="date-info"></div>
+                    <div class="current-region"></div>
+                </div>
+
+                <div class="products-container">
+                    <!-- 商品卡片将通过JavaScript动态加载 -->
+                </div>
+            </div>
+
+            <div class="footer-note"></div>
+        </div>
+
+        <script src="js/data.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
