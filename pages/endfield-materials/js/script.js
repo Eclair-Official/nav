@@ -200,7 +200,7 @@ function generatefooter() {
                     <a href="https://www.bilibili.com/video/BV1HoABzzEQ6" target="_blank">
                         导购福音！物资调度居然能多赚30%？
                     </a>  
-                      <img src="/images/image.png"></img>
+                      <img src="images/image.png"></img>
                 </p>
 `
 
