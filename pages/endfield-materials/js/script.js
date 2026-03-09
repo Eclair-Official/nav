@@ -203,8 +203,6 @@ function generatefooter() {
                       <img src="images/image.png"></img>
                 </p>
 `
-
-    footer.appendChild(description)
 }
 // 初始化函数
 function initialize() {
