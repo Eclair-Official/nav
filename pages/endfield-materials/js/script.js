@@ -204,7 +204,7 @@ function generatefooter() {
                 </p>
 `
 
-    footerNote.appendChild(description)
+    footer.appendChild(description)
 }
 // 初始化函数
 function initialize() {
