@@ -21,6 +21,7 @@ const regionProducts = {
         { name: '天使罐头货组', image: 'tundra_4.webp' },
         { name: '谷地水培肉货组', image: 'tundra_5.webp' },
         { name: '团结牌口服液货组', image: 'tundra_6.webp' },
+
         { name: '源石树幼苗货组', image: 'tundra_10.webp' },
         { name: '塞什卡髀石货组', image: 'tundra_7.webp' },
         { name: '警戒者矿镐货组', image: 'tundra_11.webp' },
@@ -77,8 +78,9 @@ const productAdjustments = {
 
     谷地水培肉货组: { adjust: -300, sellLevel: 1 },
     团结牌口服液货组: { adjust: -300, sellLevel: 1 },
-    塞什卡髀石货组: { adjust: -300, sellLevel: 1 },
     源石树幼苗货组: { adjust: 0, sellLevel: 2 },
+    塞什卡髀石货组: { adjust: -300, sellLevel: 1 },
+
     警戒者矿镐货组: { adjust: 0, sellLevel: 2 },
     星体晶块货组: { adjust: -300, sellLevel: 1 },
     硬脑壳头盔货组: { adjust: 0, sellLevel: 2 },
