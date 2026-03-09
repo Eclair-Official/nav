@@ -21,18 +21,18 @@ const regionProducts = {
         { name: '天使罐头货组', image: 'tundra_4.webp' },
         { name: '谷地水培肉货组', image: 'tundra_5.webp' },
         { name: '团结牌口服液货组', image: 'tundra_6.webp' },
-        { name: '塞什卡髀石货组', image: 'tundra_7.webp' },
-        { name: '星体晶块货组', image: 'tundra_8.webp' },
-        { name: '边角料积木货组', image: 'tundra_9.webp' },
         { name: '源石树幼苗货组', image: 'tundra_10.webp' },
+        { name: '塞什卡髀石货组', image: 'tundra_7.webp' },
         { name: '警戒者矿镐货组', image: 'tundra_11.webp' },
-        { name: '硬脑壳头盔货组', image: 'tundra_12.webp' }
+        { name: '星体晶块货组', image: 'tundra_8.webp' },
+        { name: '硬脑壳头盔货组', image: 'tundra_12.webp' },
+        { name: '边角料积木货组', image: 'tundra_9.webp' }
     ],
     武陵: [
-        { name: '武陵冻梨货组', image: 'jinlong_1.webp' },
         { name: '岳研避瘴茶货组', image: 'jinlong_2.webp' },
+        { name: '武侠电影货组', image: 'jinlong_4.webp' },
         { name: '冬虫夏笋货组', image: 'jinlong_3.webp' },
-        { name: '武侠电影货组', image: 'jinlong_4.webp' }
+        { name: '武陵冻梨货组', image: 'jinlong_1.webp' }
     ]
 }
 
@@ -74,19 +74,21 @@ const productAdjustments = {
     悬空鼷兽骨雕货组: { adjust: -700, sellLevel: 0 },
     巫术矿钻货组: { adjust: -700, sellLevel: 0 },
     天使罐头货组: { adjust: -700, sellLevel: 0 },
+
     谷地水培肉货组: { adjust: -300, sellLevel: 1 },
     团结牌口服液货组: { adjust: -300, sellLevel: 1 },
     塞什卡髀石货组: { adjust: -300, sellLevel: 1 },
-    星体晶块货组: { adjust: 0, sellLevel: 2 },
-    边角料积木货组: { adjust: 0, sellLevel: 2 },
-    源石树幼苗货组: { adjust: -300, sellLevel: 1 },
+    源石树幼苗货组: { adjust: 0, sellLevel: 2 },
     警戒者矿镐货组: { adjust: 0, sellLevel: 2 },
+    星体晶块货组: { adjust: -300, sellLevel: 1 },
     硬脑壳头盔货组: { adjust: 0, sellLevel: 2 },
+    边角料积木货组: { adjust: 0, sellLevel: 2 },
 
     // 武陵商品
-    武陵冻梨货组: { adjust: 0, sellLevel: 0 },
+
     岳研避瘴茶货组: { adjust: 0, sellLevel: 0 },
     冬虫夏笋货组: { adjust: 0, sellLevel: 0 },
+    武陵冻梨货组: { adjust: 0, sellLevel: 0 },
     武侠电影货组: { adjust: 0, sellLevel: 0 }
 }
 
