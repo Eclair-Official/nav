@@ -643,7 +643,8 @@
                 // 返回两个方案：最佳分流 和 轻量化方案
                 return {
                     optimal: findOptimalSplitFromTime(targetTime),
-                    lightweight: findLightweightSplitFromTime(targetTime)
+                    lightweight: findLightweightSplitFromTime(targetTime),
+                    lastweight: findLastSplitFromTime(targetTime)
                 }
             }
 
@@ -908,6 +909,95 @@
                     return null
                 }
 
+                return {
+                    pipeline: {
+                        splits: splits,
+                        rate: actualRate,
+                        time: actualTime
+                    },
+                    totalRate: actualRate,
+                    totalTime: actualTime
+                }
+            }
+            // 查找轻量化方案只是用1/2,1/3
+            function findLastSplitFromTime(targetTime) {
+                const baseTime = 2
+
+                if (targetTime <= baseTime) {
+                    return {
+                        pipeline: {
+                            splits: [],
+                            rate: 1 / baseTime,
+                            time: baseTime
+                        },
+                        totalRate: 1 / baseTime,
+                        totalTime: baseTime
+                    }
+                }
+
+                const targetMultiplier = targetTime / baseTime
+                // const minEfficiencyRatio = 0.8 // 允许效率降低到80%
+                // const minMultiplier = targetMultiplier * minEfficiencyRatio
+
+                let bestSplitCount = Infinity
+                let bestCount2 = 0
+                let bestCount3 = 0
+                let bestCount3_2 = 0
+                let bestMultiplier = 1
+                let bestDiff = Infinity
+
+                const log2 = Math.log(2)
+                const log3 = Math.log(3)
+                const log3_2 = Math.log(3 / 2)
+                const logTarget = Math.log(targetMultiplier)
+
+                const maxPower = Math.ceil(logTarget / Math.min(log2, log3_2)) + 10
+                const maxPower3 = Math.ceil(logTarget / log3) + 5
+
+                // 优先只使用1/3和1/2
+                for (let count3 = 0; count3 <= maxPower3; count3++) {
+                    for (let count2 = 0; count2 <= maxPower; count2++) {
+                        const multiplier = Math.pow(2, count2) * Math.pow(3, count3)
+                        const actualTime = 2 * multiplier
+
+                        if (multiplier > targetMultiplier * 1.5) continue
+                        //效率问题 if (multiplier < minMultiplier || actualTime <= 40) continue
+                        if (actualTime <= 40) continue
+
+                        if (multiplier <= targetMultiplier) {
+                            const splitCount = count2 + count3
+                            const diff = Math.abs(multiplier - targetMultiplier)
+
+                            // 优先选择分流数量少的，如果数量相同则选择更接近目标的
+                            if (splitCount < bestSplitCount || (splitCount === bestSplitCount && diff < bestDiff)) {
+                                bestSplitCount = splitCount
+                                bestCount2 = count2
+                                bestCount3 = count3
+                                bestCount3_2 = 0
+                                bestMultiplier = multiplier
+                                bestDiff = diff
+                            }
+                        }
+                    }
+                }
+
+                const splits = []
+                for (let i = 0; i < bestCount3; i++) splits.push(3)
+                for (let i = 0; i < bestCount2; i++) splits.push(2)
+                for (let i = 0; i < bestCount3_2; i++) splits.push(3 / 2)
+
+                const actualTime = baseTime * bestMultiplier
+                const actualRate = 1 / actualTime
+
+                // 如果轻量化方案效率太低（<80%）或找不到有效方案，返回null
+                // const efficiencyRatio = bestMultiplier / targetMultiplier
+                // if (bestMultiplier === 1 || efficiencyRatio < minEfficiencyRatio || actualTime <= 40) {
+                //     return null
+                // }
+
+                if (bestMultiplier === 1 || actualTime <= 40) {
+                    return null
+                }
                 return {
                     pipeline: {
                         splits: splits,
@@ -1321,7 +1411,19 @@
                         '#ff9800'
                     )
                 }
-
+                // 只有最少分流方案有效时才显示
+                if (
+                    solutions.lastweight &&
+                    solutions.lastweight.pipeline &&
+                    solutions.lightweight.totalTime !== solutions.lastweight.totalTime
+                ) {
+                    html += generatePipelineHTML(
+                        solutions.lastweight.pipeline,
+                        '最少分流方案',
+                        '减少分流器数量，只是用1/2,1/3分流器',
+                        '#ff9800'
+                    )
+                }
                 results.innerHTML += html
                 pipelineSectionDiv.style.display = 'block'
             }
