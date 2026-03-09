@@ -89,6 +89,12 @@ window.navData = [
                 url: 'pages/endfield-calculator/',
                 description: '电量分流计算器',
                 target: 'local'
+            },
+            {
+                name: '弹性物资调度',
+                url: 'pages/endfield-materials/',
+                description: '弹性物资调度',
+                target: 'local'
             }
         ]
     }
