@@ -190,12 +190,28 @@ function updateProductPrices() {
     })
 }
 
+// 动态生成星期按钮
+function generatefooter() {
+    const footer = document.querySelector('.footer-note')
+
+    footer.innerHTML = `
+   <p class="description">
+                    数据来源 b站up  卓越行动
+                    <a href="https://www.bilibili.com/video/BV1HoABzzEQ6" target="_blank">
+                        导购福音！物资调度居然能多赚30%？
+                    </a>  
+                      <img src="/images/image.png"></img>
+                </p>
+`
+
+    footerNote.appendChild(description)
+}
 // 初始化函数
 function initialize() {
     // 生成星期和地区按钮
     generateWeekButtons()
     generateRegionButtons()
-
+    generatefooter()
     // 初始加载数据
     updateProductPrices()
 }
