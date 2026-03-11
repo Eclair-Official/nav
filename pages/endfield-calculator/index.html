@@ -1423,7 +1423,8 @@
                 if (
                     solutions.lastweight &&
                     solutions.lastweight.pipeline &&
-                    solutions.optimal.totalTime !== solutions.lastweight.totalTime
+                    solutions.optimal.totalTime !== solutions.lastweight.totalTime &&
+                    solutions.lightweight.totalTime !== solutions.lastweight.totalTime
                 ) {
                     html += generatePipelineHTML(
                         solutions.lastweight.pipeline,
