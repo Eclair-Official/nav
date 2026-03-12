@@ -1,0 +1,364 @@
+  body {
+                font-family: 'Microsoft YaHei', Arial, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 10px;
+                background: #f5f5f5;
+                min-height: 100vh;
+                font-size: 13px;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            .container {
+                background: white;
+                border-radius: 4px;
+                padding: 15px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                color: #39c5bb;
+                text-align: center;
+                margin-bottom: 15px;
+                font-size: 1.5em;
+            }
+
+            .input-section {
+                background: #f8f9fa;
+                padding: 10px;
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+
+            .input-group {
+                margin-bottom: 8px;
+            }
+            .btn-highlight {
+                background-color: #28a745;
+                color: #ffffff;
+                border: none;
+                border-radius: 4px;
+                /* 核心：确保宽度随内容包裹，不拉伸 */
+                display: inline-block;
+                /* 内边距适中，仅给文字周围少量留白，不增加多余宽度 */
+                padding: 6px 12px;
+                margin: 0 4px;
+                /* 取消默认宽度，随内容自适应 */
+                width: auto;
+                /* 鼠标悬浮手型 */
+                cursor: pointer;
+                outline: none;
+                /* 可选：取消按钮默认的文字居中（如需左对齐，可添加 text-align: left;） */
+                text-align: center;
+            }
+
+            .btn-highlight:hover {
+                background-color: #218838;
+            }
+
+            .btn-highlight:active {
+                background-color: #1e7e34;
+                transform: translateY(1px);
+            }
+
+            /* 普通按钮（也设置宽度包裹，保持样式统一） */
+            .btn-normal {
+                background-color: #e9ecef;
+                color: #212529;
+                border: none;
+                border-radius: 4px;
+                display: inline-block;
+                padding: 6px 12px;
+                margin: 0 4px;
+                width: auto;
+                cursor: pointer;
+                outline: none;
+            }
+            label {
+                display: block;
+                font-weight: bold;
+                margin-bottom: 3px;
+                color: #555;
+                font-size: 12px;
+            }
+
+            input[type='number'],
+            select {
+                width: 100%;
+                padding: 6px;
+                border: 2px solid #ddd;
+                border-radius: 3px;
+                font-size: 13px;
+                box-sizing: border-box;
+            }
+
+            input[type='number']:focus,
+            select:focus {
+                outline: none;
+                border-color: #39c5bb;
+            }
+
+            button {
+                width: 100%;
+                padding: 10px;
+                background: #39c5bb;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: normal;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+
+            button:hover {
+                background: #2da89f;
+            }
+
+            button:active {
+                background: #248c84;
+            }
+
+            .result-section {
+                margin-top: 15px;
+            }
+
+            .result-header {
+                border-bottom: 2px solid #39c5bb;
+                padding-bottom: 6px;
+                margin-bottom: 8px;
+            }
+
+            .result-header h2 {
+                margin: 0;
+                color: #ff3d00;
+                font-weight: normal;
+                font-size: 1.5em;
+            }
+
+            .result-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 6px;
+                margin-bottom: 10px;
+            }
+
+            .stat-card {
+                background: #fafafa;
+                padding: 6px;
+                border-radius: 2px;
+                border-left: 3px solid #39c5bb;
+            }
+
+            .stat-label {
+                font-size: 10px;
+                color: #666;
+                margin-bottom: 2px;
+            }
+
+            .stat-value {
+                font-size: 14px;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .pipeline-list {
+                margin-top: 10px;
+            }
+
+            .pipeline-item {
+                background: white;
+                border: 1px solid #e0e0e0;
+                border-radius: 2px;
+                padding: 8px;
+                margin-bottom: 6px;
+                transition: all 0.2s;
+            }
+
+            .pipeline-item:hover {
+                border-color: #999;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .pipeline-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 6px;
+            }
+
+            .pipeline-title {
+                font-weight: normal;
+                font-size: 13px;
+                color: #333;
+            }
+
+            .pipeline-efficiency {
+                background: #39c5bb;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 2px;
+                font-size: 11px;
+            }
+
+            .pipeline-splits {
+                color: #666;
+                line-height: 1.5;
+                font-size: 12px;
+            }
+
+            .split-badge {
+                display: inline-block;
+                background: #e0e0e0;
+                color: #333;
+                padding: 2px 6px;
+                border-radius: 2px;
+                margin-right: 4px;
+                font-size: 11px;
+            }
+
+            .description {
+                background: #fafafa;
+                padding: 10px;
+                border-radius: 2px;
+                margin-bottom: 10px;
+                border-left: 3px solid #39c5bb;
+                font-size: 12px;
+            }
+
+            .description h3 {
+                margin-top: 0;
+                color: #39c5bb;
+                font-weight: normal;
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+
+            .description p {
+                margin: 5px 0;
+            }
+
+            .description ul {
+                margin: 5px 0;
+                padding-left: 20px;
+            }
+
+            .description li {
+                margin: 3px 0;
+            }
+
+            .no-solution {
+                background: #fafafa;
+                color: #666;
+                padding: 12px;
+                border-radius: 2px;
+                text-align: center;
+                border: 1px solid #e0e0e0;
+                font-size: 12px;
+            }
+
+            .main-layout {
+                display: grid;
+                grid-template-columns: 400px 1fr;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+
+            .left-panel {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .right-panel {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .pipeline-section {
+                grid-column: 1 / -1;
+            }
+
+            /* 移动端适配 */
+            @media (max-width: 768px) {
+                body {
+                    padding: 5px;
+                    font-size: 12px;
+                }
+
+                .container {
+                    padding: 10px;
+                }
+
+                h1 {
+                    font-size: 1.3em;
+                    margin-bottom: 10px;
+                }
+
+                .main-layout {
+                    grid-template-columns: 1fr;
+                    gap: 10px;
+                }
+
+                .description {
+                    font-size: 11px;
+                }
+
+                .description h3 {
+                    font-size: 1em;
+                }
+
+                .input-section {
+                    padding: 8px;
+                }
+
+                input[type='number'],
+                select {
+                    padding: 8px;
+                    font-size: 14px;
+                }
+
+                button {
+                    padding: 12px;
+                    font-size: 15px;
+                }
+
+                .result-stats {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 5px;
+                }
+
+                .stat-card {
+                    padding: 5px;
+                }
+
+                .stat-label {
+                    font-size: 9px;
+                }
+
+                .stat-value {
+                    font-size: 13px;
+                }
+
+                .result-header h2 {
+                    font-size: 1em;
+                }
+
+                .pipeline-item {
+                    padding: 6px;
+                }
+
+                .pipeline-title {
+                    font-size: 12px;
+                }
+
+                .pipeline-efficiency {
+                    font-size: 10px;
+                    padding: 2px 6px;
+                }
+
+                .pipeline-splits {
+                    font-size: 11px;
+                }
+            }
