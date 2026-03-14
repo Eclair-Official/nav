@@ -97,6 +97,29 @@ window.navData = [
                 target: 'local'
             }
         ]
+    },
+    {
+        category: '终末地',
+        items: [
+            {
+                name: '终末地一图流',
+                url: 'https://ef.yituliu.cn/',
+                description: '终末地一图流',
+                target: ''
+            },
+            {
+                name: '终末地基质规划器 ',
+                url: 'https://end.canmoe.com/',
+                description: '终末地基质规划器',
+                target: ''
+            },
+            {
+                name: '终末地地图',
+                url: 'https://www.zmdmap.com/',
+                description: '终末地地图',
+                target: ''
+            }
+        ]
     }
     // {
     //     category: '常用工具',
