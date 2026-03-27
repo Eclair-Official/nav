@@ -118,6 +118,13 @@ window.navData = [
                 url: 'https://www.zmdmap.com/',
                 description: '终末地地图',
                 target: ''
+            },
+            {
+                name: 'D.I.G.E.震荡发电',
+                url: 'https://dige.aunly.cn/',
+                description:
+                    '欢迎使用 D.I.G.E.（Dijiang Integrated Generator Efficiency）！这是一个用于计算明日方舟：终末地中热能池最优发电方案的工具。',
+                target: ''
             }
         ]
     }
